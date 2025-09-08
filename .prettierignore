@@ -1,0 +1,3 @@
+# html, json 파일 제외, src 내부의 tsx/ts prettier 적용
+*.html
+*.json
