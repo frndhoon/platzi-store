@@ -40,7 +40,7 @@ const usePostProduct = () => {
     },
     onError: () => {
       // 각 에러 코드에 대해 처리가 필요하지만, api 문서에 명시되어 있지 않아 일단 전체 에러 처리
-      toast.error("상품 등록에 실패했습니다.");
+      window.alert("상품 등록에 실패했습니다.");
     }
   });
 };
@@ -57,7 +57,7 @@ const useDeleteProduct = () => {
     },
     onError: () => {
       // 각 에러 코드에 대해 처리가 필요하지만, api 문서에 명시되어 있지 않아 일단 전체 에러 처리
-      toast.error("상품 삭제에 실패했습니다.");
+      window.alert("상품 삭제에 실패했습니다.");
     }
   });
 };
