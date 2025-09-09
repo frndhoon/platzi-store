@@ -6,7 +6,7 @@ import {
 
 import { axiosInstance } from "./instance";
 
-// Products 조회 api 호출
+// Product list 조회 API 호출
 const getProductList = async (): Promise<GetProductListResponse> => {
   const response = await axiosInstance.get("products");
   return response.data;
