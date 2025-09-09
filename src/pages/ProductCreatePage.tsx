@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 
+import { createProduct } from "@/api/product";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,9 +25,8 @@ const ProductCreatePage = () => {
     }
   });
 
-  // TODO: http client 로직 필요
   const onSubmit = (data: CreatedProductRequest) => {
-    console.log(data);
+    createProduct(data);
   };
 
   return (

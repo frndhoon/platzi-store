@@ -14,7 +14,7 @@ type Product = {
   images: string[];
 };
 
-// 생성 시 제출해야할 product type
+// 생성 시 request로 보내야할 product type
 type CreatedProductRequest = {
   title: string;
   price: number;
@@ -23,4 +23,14 @@ type CreatedProductRequest = {
   images: string[];
 };
 
-export { type CreatedProductRequest, type Product };
+// 생성 시 response로 받는 product type
+type CreatedProductResponse = Product & {
+  creationAt: string;
+  updatedAt: string;
+};
+
+export {
+  type CreatedProductRequest,
+  type CreatedProductResponse,
+  type Product
+};
