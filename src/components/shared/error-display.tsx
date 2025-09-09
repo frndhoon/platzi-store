@@ -4,6 +4,7 @@ type ErrorDisplayProps = {
   onRefetch: () => void;
 };
 
+// 에러 시 렌더링될 문구 및 refetch 버튼
 // refetch 버튼 클릭 시 데이터 다시 불러오기
 const ErrorDisplay = ({ onRefetch }: ErrorDisplayProps) => {
   return (

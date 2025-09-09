@@ -17,6 +17,7 @@ type ProductModalProps = {
   onClose: () => void;
 };
 
+// product-card 클릭 시 열리는 모달
 const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
   const { data: product, isLoading, error, refetch } = useGetProduct(productId);
   const { mutate: deleteProduct } = useDeleteProduct();

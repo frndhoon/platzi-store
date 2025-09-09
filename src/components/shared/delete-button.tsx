@@ -16,6 +16,8 @@ type DeleteButtonProps = {
   target: string;
 };
 
+// 삭제 버튼
+// 버튼 클릭 이벤트 시 alert dialog 렌더링
 const DeleteButton = ({ onDelete, target }: DeleteButtonProps) => {
   return (
     <AlertDialog>
