@@ -1,3 +1,4 @@
+import { BorderLine } from "@/components/shared/border-line";
 import { DeleteButton } from "@/components/shared/delete-button";
 import { ErrorDisplay } from "@/components/shared/error-display";
 import {
@@ -55,6 +56,8 @@ const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
                   ))}
                 </div>
 
+                <BorderLine />
+
                 {/* 상품 정보 */}
                 <div className="flex flex-col gap-2">
                   <p className="text-lg font-semibold">{product.title}</p>
@@ -65,6 +68,8 @@ const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
                   <h3 className="text-lg font-semibold">Description</h3>
                   <DialogDescription>{product.description}</DialogDescription>
                 </div>
+
+                <BorderLine />
 
                 <DeleteButton onDelete={handleDelete} target="product" />
               </div>

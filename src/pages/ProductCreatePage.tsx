@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
 
+import { BorderLine } from "@/components/shared/border-line";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -80,7 +81,7 @@ const ProductCreatePage = () => {
         </p>
       </div>
 
-      <hr className="border-t-1 border-gray-200" />
+      <BorderLine />
 
       <Form {...form}>
         <form
@@ -139,7 +140,7 @@ const ProductCreatePage = () => {
             )}
           />
 
-          <hr className="border-t-1 border-gray-200" />
+          <BorderLine />
 
           <FormField
             control={form.control}
@@ -181,7 +182,7 @@ const ProductCreatePage = () => {
             )}
           />
 
-          <hr className="border-t-1 border-gray-200" />
+          <BorderLine />
 
           <div className="flex flex-row gap-2">
             <Button
