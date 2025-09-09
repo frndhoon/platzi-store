@@ -1,4 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  type UseMutationResult,
+  useQuery,
+  useQueryClient,
+  type UseQueryResult
+} from "@tanstack/react-query";
+import { type AxiosError } from "axios";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -8,10 +15,18 @@ import {
   getProductList,
   postProduct
 } from "@/api/product.api";
-import { type PostProductRequest } from "@/types/product.types";
+import {
+  type DeleteProductResponse,
+  type GetProductListResponse,
+  type GetProductResponse,
+  type PostProductRequest,
+  type PostProductResponse
+} from "@/types/product.types";
 
 // Product 조회 useQuery hook
-const useGetProduct = (id: number) => {
+const useGetProduct = (
+  id: number
+): UseQueryResult<GetProductResponse, AxiosError> => {
   return useQuery({
     queryKey: ["product", id],
     queryFn: () => getProduct(id)
@@ -19,7 +34,10 @@ const useGetProduct = (id: number) => {
 };
 
 // Products 조회 useQuery hook
-const useGetProductList = () => {
+const useGetProductList = (): UseQueryResult<
+  GetProductListResponse,
+  AxiosError
+> => {
   return useQuery({
     queryKey: ["productList"],
     queryFn: getProductList
@@ -27,7 +45,11 @@ const useGetProductList = () => {
 };
 
 // Product 생성 useMutation hook
-const usePostProduct = () => {
+const usePostProduct = (): UseMutationResult<
+  PostProductResponse,
+  AxiosError,
+  PostProductRequest
+> => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -46,7 +68,11 @@ const usePostProduct = () => {
 };
 
 // Product 삭제 useMutation hook
-const useDeleteProduct = () => {
+const useDeleteProduct = (): UseMutationResult<
+  DeleteProductResponse,
+  AxiosError,
+  number
+> => {
   const queryClient = useQueryClient();
 
   return useMutation({
