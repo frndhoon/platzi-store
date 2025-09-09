@@ -5,9 +5,10 @@ import {
   DialogTitle,
   DialogDescription
 } from "@/components/ui/dialog";
-import { useProduct } from "@/hooks/useProducts";
+import { useDeleteProduct, useProduct } from "@/hooks/useProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ErrorDisplay } from "@/components/shared/error-display";
+import { Button } from "@/components/ui/button";
 
 type ProductModalProps = {
   productId: number;
@@ -17,6 +18,13 @@ type ProductModalProps = {
 
 const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
   const { data: product, isLoading, error, refetch } = useProduct(productId);
+
+  const { mutate: deleteProduct } = useDeleteProduct();
+
+  const handleDelete = () => {
+    deleteProduct(productId);
+    onClose();
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -58,6 +66,10 @@ const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
                   <h3 className="text-lg font-semibold">설명</h3>
                   <DialogDescription>{product.description}</DialogDescription>
                 </div>
+
+                <Button variant="destructive" onClick={handleDelete}>
+                  삭제
+                </Button>
               </div>
             )}
           </>

@@ -19,6 +19,7 @@ const getProductList = async (): Promise<GetProductListResponse> => {
   return response.data;
 };
 
+// Product 생성 API 호출
 const postProduct = async (
   product: PostProductRequest
 ): Promise<PostProductResponse> => {
@@ -26,4 +27,9 @@ const postProduct = async (
   return response.data;
 };
 
-export { getProduct, postProduct, getProductList };
+// Product 삭제 API 호출
+const deleteProduct = async (id: number): Promise<void> => {
+  await axiosInstance.delete(`products/${id}`);
+};
+
+export { getProduct, postProduct, getProductList, deleteProduct };

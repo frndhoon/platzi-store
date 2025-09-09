@@ -1,6 +1,11 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { postProduct, getProductList, getProduct } from "@/api/product";
+import {
+  postProduct,
+  getProductList,
+  getProduct,
+  deleteProduct
+} from "@/api/product";
 
 import { type PostProductRequest } from "@/types/product";
 import { toast } from "sonner";
@@ -35,4 +40,17 @@ const usePostProduct = () => {
   });
 };
 
-export { useProduct, usePostProduct, useProductList };
+// Product 삭제 useMutation hook
+const useDeleteProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number) => deleteProduct(id),
+    onSuccess: () => {
+      toast.success("상품이 성공적으로 삭제되었습니다.");
+      queryClient.invalidateQueries({ queryKey: ["productList"] }); // 상품 목록 쿼리키 갱신 -> 상품 목록 데이터 갱신
+    }
+  });
+};
+
+export { useProduct, usePostProduct, useProductList, useDeleteProduct };
