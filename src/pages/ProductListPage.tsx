@@ -2,6 +2,7 @@ import { ProductCard } from "@/components/product/product-card";
 import { EmptyDisplay } from "@/components/shared/empty-display";
 import { ErrorDisplay } from "@/components/shared/error-display";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SKELETON_ITEM_COUNT } from "@/constants/product.constant";
 import { useGetProductList } from "@/hooks/useProduct";
 import { type Product } from "@/types/product.types";
 
@@ -21,7 +22,7 @@ const ProductListPage = () => {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-3 justify-items-center">
-        {Array.from({ length: 10 }).map((_, index) => (
+        {Array.from({ length: SKELETON_ITEM_COUNT }).map((_, index) => (
           <Skeleton
             className="w-full h-[384px] rounded-xl border shadow-sm"
             key={index}
