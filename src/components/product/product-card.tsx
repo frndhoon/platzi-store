@@ -14,21 +14,22 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
+        {/* truncate: 줄 바꿈 없이 한 줄로 표시 */}
+        <CardTitle className="truncate">
           {/* 상품명 */}
-          상품명: {title}
+          {title}
         </CardTitle>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="space-y-2">
         {/* 상품 이미지, 가격, 설명 */}
+        <img src={thumbnail} alt={title} className="w-48 h-48 rounded-md" />
 
-        <img src={thumbnail} alt="image" />
-
-        <p className="mt-2" />
-        <div className="flex flex-col">
-          <p>가격: {price}</p>
-          <p>설명: {description}</p>
+        <div className="space-y-2">
+          <p>{price}$</p>
+          {/* line-clamp-3: 3줄까지 표시하고,
+           overflow-hidden: 넘치는 부분은 숨김 */}
+          <p className="line-clamp-3 overflow-hidden">{description}</p>
         </div>
       </CardContent>
     </Card>
