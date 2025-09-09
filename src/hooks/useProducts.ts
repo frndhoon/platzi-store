@@ -12,6 +12,7 @@ const useProductList = () => {
   });
 };
 
+// Product 생성 useMutation hook
 const usePostProduct = () => {
   return useMutation({
     mutationFn: (product: PostProductRequest) => postProduct(product)

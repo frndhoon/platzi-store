@@ -2,7 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { createProduct } from "@/api/product";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,8 +13,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { type CreatedProductRequest } from "@/types/product";
+
 import { useNavigate } from "react-router";
+import { usePostProduct } from "@/hooks/useProducts";
+import { type PostProductRequest } from "@/types/product";
 
 const formSchema = z.object({
   // 서버 400 error message
@@ -49,6 +50,7 @@ const formSchema = z.object({
 
 const ProductCreatePage = () => {
   const navigate = useNavigate();
+  const { mutate: postProduct } = usePostProduct();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -61,8 +63,8 @@ const ProductCreatePage = () => {
     }
   });
 
-  const onSubmit = (data: CreatedProductRequest) => {
-    createProduct(data);
+  const onSubmit = (data: PostProductRequest) => {
+    postProduct(data);
   };
 
   return (
