@@ -3,7 +3,7 @@ import {
   type GetProductResponse,
   type PostProductRequest,
   type PostProductResponse
-} from "@/types/product";
+} from "@/types/product.types";
 
 import { axiosInstance } from "./instance";
 

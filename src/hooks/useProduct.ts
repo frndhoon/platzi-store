@@ -7,11 +7,11 @@ import {
   getProduct,
   getProductList,
   postProduct
-} from "@/api/product";
-import { type PostProductRequest } from "@/types/product";
+} from "@/api/product.api";
+import { type PostProductRequest } from "@/types/product.types";
 
 // Product 조회 useQuery hook
-const useProduct = (id: number) => {
+const useGetProduct = (id: number) => {
   return useQuery({
     queryKey: ["product", id],
     queryFn: () => getProduct(id)
@@ -19,7 +19,7 @@ const useProduct = (id: number) => {
 };
 
 // Products 조회 useQuery hook
-const useProductList = () => {
+const useGetProductList = () => {
   return useQuery({
     queryKey: ["productList"],
     queryFn: getProductList
@@ -52,4 +52,4 @@ const useDeleteProduct = () => {
   });
 };
 
-export { useDeleteProduct, usePostProduct, useProduct, useProductList };
+export { useDeleteProduct, useGetProduct, useGetProductList, usePostProduct };

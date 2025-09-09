@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { usePostProduct } from "@/hooks/useProducts";
-import { type PostProductRequest } from "@/types/product";
+import { usePostProduct } from "@/hooks/useProduct";
+import { type PostProductRequest } from "@/types/product.types";
 
 const formSchema = z.object({
   // 서버 400 error message

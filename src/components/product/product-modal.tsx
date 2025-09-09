@@ -8,7 +8,7 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useDeleteProduct, useProduct } from "@/hooks/useProducts";
+import { useDeleteProduct, useGetProduct } from "@/hooks/useProduct";
 
 type ProductModalProps = {
   productId: number;
@@ -17,7 +17,7 @@ type ProductModalProps = {
 };
 
 const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
-  const { data: product, isLoading, error, refetch } = useProduct(productId);
+  const { data: product, isLoading, error, refetch } = useGetProduct(productId);
 
   const { mutate: deleteProduct } = useDeleteProduct();
 

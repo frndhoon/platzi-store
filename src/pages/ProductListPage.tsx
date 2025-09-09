@@ -2,11 +2,11 @@ import { ProductCard } from "@/components/product/product-card";
 import { EmptyDisplay } from "@/components/shared/empty-display";
 import { ErrorDisplay } from "@/components/shared/error-display";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useProductList } from "@/hooks/useProducts";
-import { type Product } from "@/types/product";
+import { useGetProductList } from "@/hooks/useProduct";
+import { type Product } from "@/types/product.types";
 
 const ProductListPage = () => {
-  const { data: productList, isLoading, error, refetch } = useProductList();
+  const { data: productList, isLoading, error, refetch } = useGetProductList();
 
   // 에러 발생 시
   if (error) {
