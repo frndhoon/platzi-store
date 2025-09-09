@@ -163,15 +163,15 @@ const ProductCreatePage = () => {
           />
 
           <div className="flex flex-row gap-2">
-            <Button type="submit" className="flex-1">
-              등록하기
-            </Button>
             <Button
               type="button"
               onClick={() => navigate("/product")}
               className="flex-1"
             >
               취소
+            </Button>
+            <Button type="submit" className="flex-1">
+              등록하기
             </Button>
           </div>
         </form>
