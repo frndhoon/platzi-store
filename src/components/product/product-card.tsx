@@ -27,7 +27,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <>
       <Card
-        className="cursor-pointer hover:scale-102 transition-transform"
+        className="cursor-pointer hover:scale-102"
         onClick={handleCardClick}
       >
         <CardHeader>
