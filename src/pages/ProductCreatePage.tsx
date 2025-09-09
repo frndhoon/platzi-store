@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -13,8 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-
-import { useNavigate } from "react-router";
 import { usePostProduct } from "@/hooks/useProducts";
 import { type PostProductRequest } from "@/types/product";
 

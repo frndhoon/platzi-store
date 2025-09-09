@@ -35,9 +35,9 @@ type PostProductResponse = Product & {
 };
 
 export {
+  type GetProductListResponse,
+  type GetProductResponse,
   type PostProductRequest,
   type PostProductResponse,
-  type Product,
-  type GetProductListResponse,
-  type GetProductResponse
+  type Product
 };
