@@ -61,7 +61,10 @@ const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
                 {/* 상품 정보 */}
                 <div className="flex flex-col gap-2">
                   <p className="text-lg font-semibold">{product.title}</p>
-                  <p>{product.price}$</p>
+                  <p>
+                    <span className="font-semibold">price</span> {product.price}
+                    $
+                  </p>
                 </div>
 
                 <div className="flex flex-col gap-2">
