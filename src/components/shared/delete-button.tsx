@@ -16,7 +16,7 @@ type DeleteButtonProps = {
   target: string;
 };
 
-export const DeleteButton = ({ onDelete, target }: DeleteButtonProps) => {
+const DeleteButton = ({ onDelete, target }: DeleteButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -42,3 +42,5 @@ export const DeleteButton = ({ onDelete, target }: DeleteButtonProps) => {
     </AlertDialog>
   );
 };
+
+export { DeleteButton };
