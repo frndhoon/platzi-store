@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router";
 
+import { MainLayout } from "@/components/layout/main-layout";
 import HomePage from "@/pages/HomePage";
 import ProductCreatePage from "@/pages/ProductCreatePage";
 import ProductEditPage from "@/pages/ProductEditPage";
@@ -12,12 +13,14 @@ import ProductListPage from "@/pages/ProductListPage";
 const Router = () => {
   return (
     <Routes>
-      <Route index element={<HomePage />} />
+      <Route element={<MainLayout />}>
+        <Route index element={<HomePage />} />
 
-      <Route path="product">
-        <Route index element={<ProductListPage />} />
-        <Route path="create" element={<ProductCreatePage />} />
-        <Route path="edit" element={<ProductEditPage />} />
+        <Route path="product">
+          <Route index element={<ProductListPage />} />
+          <Route path="create" element={<ProductCreatePage />} />
+          <Route path="edit" element={<ProductEditPage />} />
+        </Route>
       </Route>
     </Routes>
   );
