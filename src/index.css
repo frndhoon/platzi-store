@@ -117,4 +117,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  html {
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter */
+    /* 스크롤바 영역 외부 영역 확보 */
+    /* 스크롤바가 있는 페이지랑 없는 페이지 같은 너비로 보이게 하기 위해 */
+    /* 브라우저 모두 다 호환됨 */
+    /* html 적용 이유: 페이지 전체에 적용하기 위함 */
+    scrollbar-gutter: stable;
+  }
 }
