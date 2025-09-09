@@ -30,7 +30,7 @@ const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>상품 상세 정보</DialogTitle>
+          <DialogTitle>Product Detail</DialogTitle>
         </DialogHeader>
 
         {/* 에러 발생 시  */}
@@ -63,12 +63,12 @@ const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-lg font-semibold">설명</h3>
+                  <h3 className="text-lg font-semibold">Description</h3>
                   <DialogDescription>{product.description}</DialogDescription>
                 </div>
 
                 <Button variant="destructive" onClick={handleDelete}>
-                  삭제
+                  Delete
                 </Button>
               </div>
             )}

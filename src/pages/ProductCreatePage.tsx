@@ -25,7 +25,7 @@ const formSchema = z.object({
   // "images must contain at least 1 elements"
 
   title: z.string().min(1, {
-    message: "상품 제목은 필수입니다."
+    message: "Product title is required"
   }),
 
   // https://zod.dev/api?id=coercion
@@ -33,17 +33,17 @@ const formSchema = z.object({
   // -> 하지만, unknown 타입이 돼서 typescript에서 타입 에러가 발생
   // -> input 쪽에 e.target.value를 Number로 변환하는 방식으로 변경)
   price: z.number().min(1, {
-    message: "가격은 1달러 이상이어야합니다."
+    message: "Price must be greater than 1"
   }),
   description: z.string().min(1, {
-    message: "상품 설명은 필수입니다."
+    message: "Description is required"
   }),
   categoryId: z.number().min(1, {
-    message: "카테고리 ID는 1 이상이어야합니다."
+    message: "Category ID must be greater than 1"
   }),
   // https://zod.dev/v4/changelog?id=zarray (zod empty array 선언 방법)
   images: z.array(z.string().min(1), {
-    message: "상품은 하나 이상의 이미지가 필요합니다."
+    message: "Product must have at least one image"
   })
 });
 
@@ -68,7 +68,7 @@ const ProductCreatePage = () => {
 
   return (
     <>
-      <h1 className="mb-2">상품 등록</h1>
+      <h1 className="mb-2">Product Create</h1>
 
       <Form {...form}>
         <form
@@ -80,11 +80,11 @@ const ProductCreatePage = () => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>제목</FormLabel>
+                <FormLabel>Title</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="고유한 상품 제목을 입력하세요."
+                    placeholder="Enter a unique product title"
                   />
                 </FormControl>
                 <FormMessage />
@@ -97,7 +97,7 @@ const ProductCreatePage = () => {
             name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>가격</FormLabel>
+                <FormLabel>Price</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -115,9 +115,12 @@ const ProductCreatePage = () => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>설명</FormLabel>
+                <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea {...field} placeholder="상품 설명을 입력하세요." />
+                  <Textarea
+                    {...field}
+                    placeholder="Enter a product description"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -129,7 +132,7 @@ const ProductCreatePage = () => {
             name="categoryId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>카테고리 ID</FormLabel>
+                <FormLabel>Category ID</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -150,7 +153,7 @@ const ProductCreatePage = () => {
             name="images"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>이미지 URL</FormLabel>
+                <FormLabel>Image URL</FormLabel>
                 <FormControl>
                   <Input
                     value={field.value[0]}
@@ -170,10 +173,10 @@ const ProductCreatePage = () => {
               className="flex-1"
               variant="outline"
             >
-              취소
+              Cancel
             </Button>
             <Button type="submit" className="flex-1">
-              등록하기
+              Create
             </Button>
           </div>
         </form>
