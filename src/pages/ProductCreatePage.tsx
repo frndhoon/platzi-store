@@ -78,7 +78,10 @@ const ProductCreatePage = () => {
               <FormItem>
                 <FormLabel>제목</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    {...field}
+                    placeholder="고유한 상품 제목을 입력하세요."
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,7 +113,7 @@ const ProductCreatePage = () => {
               <FormItem>
                 <FormLabel>설명</FormLabel>
                 <FormControl>
-                  <Textarea {...field} />
+                  <Textarea {...field} placeholder="상품 설명을 입력하세요." />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -148,6 +151,7 @@ const ProductCreatePage = () => {
                   <Input
                     value={field.value[0]}
                     onChange={(e) => field.onChange([e.target.value])}
+                    placeholder="https://placehold.co/600x400"
                   />
                 </FormControl>
                 <FormMessage />
