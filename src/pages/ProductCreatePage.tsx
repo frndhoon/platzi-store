@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { type CreatedProductRequest } from "@/types/product";
+import { useNavigate } from "react-router";
 
 const formSchema = z.object({
   // 서버 400 error message
@@ -47,6 +48,8 @@ const formSchema = z.object({
 });
 
 const ProductCreatePage = () => {
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -159,7 +162,18 @@ const ProductCreatePage = () => {
             )}
           />
 
-          <Button type="submit">등록하기</Button>
+          <div className="flex flex-row gap-2">
+            <Button type="submit" className="flex-1">
+              등록하기
+            </Button>
+            <Button
+              type="button"
+              onClick={() => navigate("/product")}
+              className="flex-1"
+            >
+              취소
+            </Button>
+          </div>
         </form>
       </Form>
     </>
