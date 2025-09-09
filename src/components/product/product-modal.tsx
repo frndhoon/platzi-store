@@ -43,7 +43,7 @@ const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
                       key={index}
                       src={image}
                       alt={product.title}
-                      className="rounded-lg"
+                      className="rounded-lg w-full"
                     />
                   ))}
                 </div>

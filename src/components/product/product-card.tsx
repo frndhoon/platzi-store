@@ -40,7 +40,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         <CardContent className="space-y-2">
           {/* 상품 이미지, 가격, 설명 */}
-          <img src={thumbnail} alt={title} className="w-48 h-48 rounded-md" />
+          <img
+            src={thumbnail}
+            alt={title}
+            className="w-48 h-48 rounded-md object-cover"
+          />
 
           <div className="space-y-2">
             <p>{price}$</p>
