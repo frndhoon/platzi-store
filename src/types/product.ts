@@ -14,6 +14,9 @@ type Product = {
   images: string[];
 };
 
+// 여러 개의 product 데이터를 받아올 때 response type
+type GetProductListResponse = Product[];
+
 // 생성 시 request로 보내야할 product type
 type CreatedProductRequest = {
   title: string;
@@ -32,5 +35,6 @@ type CreatedProductResponse = Product & {
 export {
   type CreatedProductRequest,
   type CreatedProductResponse,
-  type Product
+  type Product,
+  type GetProductListResponse
 };

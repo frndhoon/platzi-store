@@ -1,11 +1,17 @@
 import {
   type CreatedProductRequest,
-  type CreatedProductResponse
+  type CreatedProductResponse,
+  type GetProductListResponse
 } from "@/types/product";
 
 import { axiosInstance } from "./instance";
 
-// TODO: 왜 CreatedProductResponse 와 undefined인지?
+// Products 조회 api 호출
+const getProductList = async (): Promise<GetProductListResponse | void> => {
+  const response = await axiosInstance.get("products");
+  return response.data;
+};
+
 const createProduct = async (
   product: CreatedProductRequest
 ): Promise<CreatedProductResponse | void> => {
@@ -22,4 +28,4 @@ const createProduct = async (
   }
 };
 
-export { createProduct };
+export { createProduct, getProductList };
