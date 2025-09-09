@@ -66,12 +66,17 @@ const ProductCreatePage = () => {
     postProduct(data);
   };
 
+  const requiredSpan = <span className="text-red-500">*</span>;
+
   return (
     <div className="flex flex-col gap-3 max-w-2xl mx-auto">
       <div className="flex flex-col gap-1">
         <h1>Product Create</h1>
         <p className="text-sm">
           Please fill out the form below to create a new product.
+        </p>
+        <p className="text-sm text-right">
+          {requiredSpan} means required fields
         </p>
       </div>
 
@@ -87,7 +92,7 @@ const ProductCreatePage = () => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Title {requiredSpan}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -104,7 +109,7 @@ const ProductCreatePage = () => {
             name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Price</FormLabel>
+                <FormLabel>Price {requiredSpan}</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -122,7 +127,7 @@ const ProductCreatePage = () => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>Description {requiredSpan}</FormLabel>
                 <FormControl>
                   <Textarea
                     {...field}
@@ -141,7 +146,7 @@ const ProductCreatePage = () => {
             name="categoryId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category ID</FormLabel>
+                <FormLabel>Category ID {requiredSpan}</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -163,7 +168,7 @@ const ProductCreatePage = () => {
             name="images"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image URL</FormLabel>
+                <FormLabel>Image URL {requiredSpan}</FormLabel>
                 <FormControl>
                   <Input
                     value={field.value[0]}
