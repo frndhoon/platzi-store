@@ -115,7 +115,9 @@ const ProductCreatePage = () => {
                   <Input
                     type="number"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      field.onChange(Number(e.target.value))
+                    }
                   />
                 </FormControl>
                 <FormMessage />
@@ -152,7 +154,9 @@ const ProductCreatePage = () => {
                   <Input
                     type="number"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      field.onChange(Number(e.target.value))
+                    }
                   />
                 </FormControl>
                 <FormMessage />
@@ -173,7 +177,9 @@ const ProductCreatePage = () => {
                 <FormControl>
                   <Input
                     value={field.value[0]}
-                    onChange={(e) => field.onChange([e.target.value])}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      field.onChange([e.target.value])
+                    }
                     placeholder="https://placehold.co/600x400"
                   />
                 </FormControl>
