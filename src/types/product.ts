@@ -15,7 +15,7 @@ type Product = {
 };
 
 // 생성 시 제출해야할 product type
-type CreatedProduct = {
+type CreatedProductRequest = {
   title: string;
   price: number;
   description: string;
@@ -23,4 +23,4 @@ type CreatedProduct = {
   images: string[];
 };
 
-export { type CreatedProduct, type Product };
+export { type CreatedProductRequest, type Product };

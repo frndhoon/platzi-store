@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { type CreatedProduct } from "@/types/product";
+import { type CreatedProductRequest } from "@/types/product";
 
 const ProductCreatePage = () => {
-  const form = useForm<CreatedProduct>({
+  const form = useForm<CreatedProductRequest>({
     defaultValues: {
       title: "",
       price: 0,
@@ -25,7 +25,7 @@ const ProductCreatePage = () => {
   });
 
   // TODO: http client 로직 필요
-  const onSubmit = (data: CreatedProduct) => {
+  const onSubmit = (data: CreatedProductRequest) => {
     console.log(data);
   };
 
