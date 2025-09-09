@@ -14,6 +14,8 @@ type Product = {
   images: string[];
 };
 
+type GetProductResponse = Product;
+
 // 여러 개의 product 데이터를 받아올 때 response type
 type GetProductListResponse = Product[];
 
@@ -36,5 +38,6 @@ export {
   type PostProductRequest,
   type PostProductResponse,
   type Product,
-  type GetProductListResponse
+  type GetProductListResponse,
+  type GetProductResponse
 };

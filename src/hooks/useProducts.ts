@@ -1,12 +1,18 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { postProduct, getProductList } from "@/api/product";
+import { postProduct, getProductList, getProduct } from "@/api/product";
 
 import { type PostProductRequest } from "@/types/product";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 
-const navigate = useNavigate();
+// Product 조회 useQuery hook
+const useProduct = (id: number) => {
+  return useQuery({
+    queryKey: ["product", id],
+    queryFn: () => getProduct(id)
+  });
+};
 
 // Products 조회 useQuery hook
 const useProductList = () => {
@@ -27,4 +33,4 @@ const usePostProduct = () => {
   });
 };
 
-export { usePostProduct, useProductList };
+export { useProduct, usePostProduct, useProductList };

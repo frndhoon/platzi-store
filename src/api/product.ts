@@ -1,10 +1,17 @@
 import {
   type PostProductRequest,
   type GetProductListResponse,
-  type PostProductResponse
+  type PostProductResponse,
+  type GetProductResponse
 } from "@/types/product";
 
 import { axiosInstance } from "./instance";
+
+// Product 조회 API 호출
+const getProduct = async (id: number): Promise<GetProductResponse> => {
+  const response = await axiosInstance.get(`products/${id}`);
+  return response.data;
+};
 
 // Product list 조회 API 호출
 const getProductList = async (): Promise<GetProductListResponse> => {
@@ -19,4 +26,4 @@ const postProduct = async (
   return response.data;
 };
 
-export { postProduct, getProductList };
+export { getProduct, postProduct, getProductList };
