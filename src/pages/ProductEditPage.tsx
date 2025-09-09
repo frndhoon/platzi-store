@@ -2,4 +2,4 @@ const ProductEditPage = () => {
   return <>edit page</>;
 };
 
-export { ProductEditPage };
+export default ProductEditPage;

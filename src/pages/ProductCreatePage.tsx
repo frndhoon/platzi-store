@@ -2,4 +2,4 @@ const ProductCreatePage = () => {
   return <>create page</>;
 };
 
-export { ProductCreatePage };
+export default ProductCreatePage;

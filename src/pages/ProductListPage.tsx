@@ -2,4 +2,4 @@ const ProductListPage = () => {
   return <>list page</>;
 };
 
-export { ProductListPage };
+export default ProductListPage;

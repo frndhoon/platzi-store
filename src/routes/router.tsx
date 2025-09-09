@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router";
 
-import { HomePage } from "@/pages/home-page";
-import { ProductCreatePage } from "@/pages/product-create-page";
-import { ProductEditPage } from "@/pages/product-edit-page";
-import { ProductListPage } from "@/pages/product-list-page";
+import HomePage from "@/pages/HomePage";
+import ProductCreatePage from "@/pages/ProductCreatePage";
+import ProductEditPage from "@/pages/ProductEditPage";
+import ProductListPage from "@/pages/ProductListPage";
 
 // 라우팅 기능 담당
 // https://reactrouter.com/start/declarative/routing
