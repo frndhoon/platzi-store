@@ -1,4 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { createProduct } from "@/api/product";
 import { Button } from "@/components/ui/button";
@@ -14,11 +16,42 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { type CreatedProductRequest } from "@/types/product";
 
+const formSchema = z.object({
+  // 서버 400 error message
+  // "title should not be empty"
+  // "price must be a positive number"
+  // "description should not be empty"
+  // "images must contain at least 1 elements"
+
+  title: z.string().min(1, {
+    message: "상품 제목은 필수입니다."
+  }),
+
+  // https://zod.dev/api?id=coercion
+  // (zod input data를 적절한 type로 coerce(강요, 강제) 함
+  // -> 하지만, unknown 타입이 돼서 typescript에서 타입 에러가 발생
+  // -> input 쪽에 e.target.value를 Number로 변환하는 방식으로 변경)
+  price: z.number().min(1, {
+    message: "가격은 1달러 이상이어야합니다."
+  }),
+  description: z.string().min(1, {
+    message: "상품 설명은 필수입니다."
+  }),
+  categoryId: z.number().min(1, {
+    message: "카테고리 ID는 1 이상이어야합니다."
+  }),
+  // https://zod.dev/v4/changelog?id=zarray (zod empty array 선언 방법)
+  images: z.array(z.string().min(1), {
+    message: "상품은 하나 이상의 이미지가 필요합니다."
+  })
+});
+
 const ProductCreatePage = () => {
-  const form = useForm<CreatedProductRequest>({
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      price: 0,
+      price: 1,
       description: "",
       categoryId: 1,
       images: []
@@ -59,7 +92,11 @@ const ProductCreatePage = () => {
               <FormItem>
                 <FormLabel>가격</FormLabel>
                 <FormControl>
-                  <Input type="number" {...field} />
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -87,7 +124,11 @@ const ProductCreatePage = () => {
               <FormItem>
                 <FormLabel>카테고리 ID</FormLabel>
                 <FormControl>
-                  <Input type="number" {...field} />
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
