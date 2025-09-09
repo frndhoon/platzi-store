@@ -21,7 +21,7 @@ const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
   const { data: product, isLoading, error, refetch } = useGetProduct(productId);
   const { mutate: deleteProduct } = useDeleteProduct();
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     deleteProduct(productId);
     onClose();
   };

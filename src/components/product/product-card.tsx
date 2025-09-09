@@ -16,11 +16,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { id, title, images, price, description } = product;
   const thumbnail = images[0];
 
-  const handleCardClick = () => {
+  const handleCardClick = (): void => {
     setIsModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleModalClose = (): void => {
     setIsModalOpen(false);
   };
 
