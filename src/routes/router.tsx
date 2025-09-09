@@ -6,6 +6,9 @@ import { ProductEditPage } from "@/pages/product-edit-page";
 import { ProductListPage } from "@/pages/product-list-page";
 
 // 라우팅 기능 담당
+// https://reactrouter.com/start/declarative/routing
+// Nested Routes 예시 적용
+
 const Router = () => {
   return (
     <Routes>
