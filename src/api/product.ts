@@ -1,7 +1,7 @@
 import {
-  type CreatedProductRequest,
-  type CreatedProductResponse,
-  type GetProductListResponse
+  type PostProductRequest,
+  type GetProductListResponse,
+  type PostProductResponse
 } from "@/types/product";
 
 import { axiosInstance } from "./instance";
@@ -12,16 +12,11 @@ const getProductList = async (): Promise<GetProductListResponse> => {
   return response.data;
 };
 
-const createProduct = async (
-  product: CreatedProductRequest
-): Promise<CreatedProductResponse | void> => {
-  try {
-    const response = await axiosInstance.post("products", product);
-    return response.data;
-  } catch (error) {
-    // TODO: 에러 처리 필요 (window.alert)
-    console.log(error);
-  }
+const postProduct = async (
+  product: PostProductRequest
+): Promise<PostProductResponse> => {
+  const response = await axiosInstance.post("products", product);
+  return response.data;
 };
 
-export { createProduct, getProductList };
+export { postProduct, getProductList };

@@ -18,7 +18,7 @@ type Product = {
 type GetProductListResponse = Product[];
 
 // 생성 시 request로 보내야할 product type
-type CreatedProductRequest = {
+type PostProductRequest = {
   title: string;
   price: number;
   description: string;
@@ -27,14 +27,14 @@ type CreatedProductRequest = {
 };
 
 // 생성 시 response로 받는 product type
-type CreatedProductResponse = Product & {
+type PostProductResponse = Product & {
   creationAt: string;
   updatedAt: string;
 };
 
 export {
-  type CreatedProductRequest,
-  type CreatedProductResponse,
+  type PostProductRequest,
+  type PostProductResponse,
   type Product,
   type GetProductListResponse
 };

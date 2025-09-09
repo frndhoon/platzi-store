@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { getProductList } from "@/api/product";
+import { postProduct, getProductList } from "@/api/product";
+
+import { type PostProductRequest } from "@/types/product";
 
 // Products 조회 useQuery hook
 const useProductList = () => {
@@ -10,4 +12,10 @@ const useProductList = () => {
   });
 };
 
-export { useProductList };
+const usePostProduct = () => {
+  return useMutation({
+    mutationFn: (product: PostProductRequest) => postProduct(product)
+  });
+};
+
+export { usePostProduct, useProductList };
