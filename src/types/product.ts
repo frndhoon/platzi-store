@@ -1,3 +1,4 @@
+// 데이터를 받아올 때 default product type
 type Product = {
   id: number;
   title: string;
@@ -13,4 +14,13 @@ type Product = {
   images: string[];
 };
 
-export { type Product };
+// 생성 시 제출해야할 product type
+type CreatedProduct = {
+  title: string;
+  price: number;
+  description: string;
+  categoryId: number;
+  images: string[];
+};
+
+export { type CreatedProduct, type Product };
