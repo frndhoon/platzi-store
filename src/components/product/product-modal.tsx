@@ -1,5 +1,5 @@
+import { DeleteButton } from "@/components/shared/delete-button";
 import { ErrorDisplay } from "@/components/shared/error-display";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -18,7 +18,6 @@ type ProductModalProps = {
 
 const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
   const { data: product, isLoading, error, refetch } = useGetProduct(productId);
-
   const { mutate: deleteProduct } = useDeleteProduct();
 
   const handleDelete = () => {
@@ -67,9 +66,7 @@ const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
                   <DialogDescription>{product.description}</DialogDescription>
                 </div>
 
-                <Button variant="destructive" onClick={handleDelete}>
-                  Delete
-                </Button>
+                <DeleteButton onDelete={handleDelete} target="product" />
               </div>
             )}
           </>
