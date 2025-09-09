@@ -67,8 +67,15 @@ const ProductCreatePage = () => {
   };
 
   return (
-    <>
-      <h1 className="mb-2">Product Create</h1>
+    <div className="flex flex-col gap-3 max-w-2xl mx-auto">
+      <div className="flex flex-col gap-1">
+        <h1>Product Create</h1>
+        <p className="text-sm">
+          Please fill out the form below to create a new product.
+        </p>
+      </div>
+
+      <hr className="border-t-1 border-gray-200" />
 
       <Form {...form}>
         <form
@@ -127,6 +134,8 @@ const ProductCreatePage = () => {
             )}
           />
 
+          <hr className="border-t-1 border-gray-200" />
+
           <FormField
             control={form.control}
             name="categoryId"
@@ -148,6 +157,7 @@ const ProductCreatePage = () => {
           {/* 이미지는 보통 formData 형식인데, request body에 string[]으로 들어가야함
           -> 파일 형태로 보내는 것과 달라서 [""] 형태로 전송
           -> fake api라 한계가 있음 */}
+
           <FormField
             control={form.control}
             name="images"
@@ -166,6 +176,8 @@ const ProductCreatePage = () => {
             )}
           />
 
+          <hr className="border-t-1 border-gray-200" />
+
           <div className="flex flex-row gap-2">
             <Button
               type="button"
@@ -181,7 +193,7 @@ const ProductCreatePage = () => {
           </div>
         </form>
       </Form>
-    </>
+    </div>
   );
 };
 
