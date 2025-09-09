@@ -8,7 +8,7 @@ import { axiosInstance } from "./instance";
 // TODO: 왜 CreatedProductResponse 와 undefined인지?
 const createProduct = async (
   product: CreatedProductRequest
-): Promise<CreatedProductResponse | undefined> => {
+): Promise<CreatedProductResponse | void> => {
   try {
     const response = await axiosInstance({
       method: "POST",
