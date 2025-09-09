@@ -54,7 +54,7 @@ const ProductCreatePage = () => {
       price: 1,
       description: "",
       categoryId: 1,
-      images: []
+      images: [""]
     }
   });
 
@@ -135,9 +135,9 @@ const ProductCreatePage = () => {
             )}
           />
 
-          {/* TODO: images라 배열 형태로 돼야함
-          form/data로 해야하는 건지... 생각해볼 것
-          */}
+          {/* 이미지는 보통 formData 형식인데, request body에 string[]으로 들어가야함
+          -> 파일 형태로 보내는 것과 달라서 [""] 형태로 전송
+          -> fake api라 한계가 있음 */}
           <FormField
             control={form.control}
             name="images"
@@ -145,7 +145,10 @@ const ProductCreatePage = () => {
               <FormItem>
                 <FormLabel>이미지 URL</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    value={field.value[0]}
+                    onChange={(e) => field.onChange([e.target.value])}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
