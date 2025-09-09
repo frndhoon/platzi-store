@@ -1,3 +1,5 @@
-export const App = () => {
+const App = () => {
   return <></>;
 };
+
+export { App };
