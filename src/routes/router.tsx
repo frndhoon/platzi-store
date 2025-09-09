@@ -1,7 +1,6 @@
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 
 import { MainLayout } from "@/components/layout/main-layout";
-import HomePage from "@/pages/HomePage";
 import ProductCreatePage from "@/pages/ProductCreatePage";
 import ProductEditPage from "@/pages/ProductEditPage";
 import ProductListPage from "@/pages/ProductListPage";
@@ -14,7 +13,8 @@ const Router = () => {
   return (
     <Routes>
       <Route element={<MainLayout />}>
-        <Route index element={<HomePage />} />
+        {/* 최초 접속 시 product 페이지로 리다이렉션 */}
+        <Route index element={<Navigate to="product" replace />} />
 
         <Route path="product">
           <Route index element={<ProductListPage />} />
