@@ -24,6 +24,8 @@ const useProductList = () => {
 
 // Product 생성 useMutation hook
 const usePostProduct = () => {
+  const navigate = useNavigate();
+
   return useMutation({
     mutationFn: (product: PostProductRequest) => postProduct(product),
     onSuccess: () => {
