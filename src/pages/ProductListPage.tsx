@@ -1,9 +1,9 @@
 import { ProductCard } from "@/components/product/product-card";
+import { EmptyDisplay } from "@/components/shared/empty-display";
+import { ErrorDisplay } from "@/components/shared/error-display";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useProductList } from "@/hooks/useProducts";
 import { type Product } from "@/types/product";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ErrorDisplay } from "@/components/shared/error-display";
-import { EmptyDisplay } from "@/components/shared/empty-display";
 
 const ProductListPage = () => {
   const { data: productList, isLoading, error, refetch } = useProductList();

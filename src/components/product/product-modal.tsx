@@ -1,14 +1,14 @@
+import { ErrorDisplay } from "@/components/shared/error-display";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogDescription
+  DialogTitle
 } from "@/components/ui/dialog";
-import { useDeleteProduct, useProduct } from "@/hooks/useProducts";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ErrorDisplay } from "@/components/shared/error-display";
-import { Button } from "@/components/ui/button";
+import { useDeleteProduct, useProduct } from "@/hooks/useProducts";
 
 type ProductModalProps = {
   productId: number;

@@ -1,8 +1,8 @@
 import {
-  type PostProductRequest,
   type GetProductListResponse,
-  type PostProductResponse,
-  type GetProductResponse
+  type GetProductResponse,
+  type PostProductRequest,
+  type PostProductResponse
 } from "@/types/product";
 
 import { axiosInstance } from "./instance";
@@ -32,4 +32,4 @@ const deleteProduct = async (id: number): Promise<void> => {
   await axiosInstance.delete(`products/${id}`);
 };
 
-export { getProduct, postProduct, getProductList, deleteProduct };
+export { deleteProduct, getProduct, getProductList, postProduct };

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
+import { Toaster } from "sonner";
 
 import { Header } from "@/components/shared/header";
-import { Toaster } from "sonner";
 
 const MainLayout = () => {
   return (

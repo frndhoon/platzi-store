@@ -1,8 +1,8 @@
 import { useState } from "react";
 
+import { ProductModal } from "@/components/product/product-modal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type Product } from "@/types/product";
-import { ProductModal } from "@/components/product/product-modal";
 
 // https://fakeapi.platzi.com/en/rest/products/#get-a-single-product-by-id
 type ProductCardProps = {
