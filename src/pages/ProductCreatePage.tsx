@@ -167,6 +167,7 @@ const ProductCreatePage = () => {
               type="button"
               onClick={() => navigate("/product")}
               className="flex-1"
+              variant="outline"
             >
               취소
             </Button>
