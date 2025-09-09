@@ -2,23 +2,21 @@ import { ProductCard } from "@/components/product/product-card";
 import { useProductList } from "@/hooks/useProducts";
 import { type Product } from "@/types/product";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ErrorDisplay } from "@/components/shared/error-display";
 
 const ProductListPage = () => {
-  const { data: productList, isLoading, error } = useProductList();
+  const { data: productList, isLoading, error, refetch } = useProductList();
 
   // TODO: 로딩, refetch, 상품 없음 컴포넌트 추가
-  if (isLoading) {
-    return <p>상품을 불러오는 중...</p>;
-  }
 
-  // 아직 데이터가 없거나 에러가 발생한 경우
-  if (!productList || error) {
-    return <p>상품을 불러오는데 실패했습니다. 다시 시도해주세요.</p>;
-  }
+  // // 성공적으로 데이터를 받았지만 상품이 없는 경우만
+  // if (productList && productList.length === 0) {
+  //   return <p>등록된 상품이 없습니다.</p>;
+  // }
 
-  // 성공적으로 데이터를 받았지만 상품이 없는 경우만
-  if (productList && productList.length === 0) {
-    return <p>등록된 상품이 없습니다.</p>;
+  // 에러 발생 시
+  if (!isLoading && !productList && error) {
+    return <ErrorDisplay onRefetch={refetch} />;
   }
 
   return (
@@ -39,8 +37,8 @@ const ProductListPage = () => {
       {/* 로딩 완료 후 */}
       {!isLoading &&
         productList?.map((product: Product) => (
-        <ProductCard product={product} key={product.id} />
-      ))}
+          <ProductCard product={product} key={product.id} />
+        ))}
     </div>
   );
 };
