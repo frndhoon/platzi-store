@@ -34,7 +34,13 @@ type PostProductResponse = Product & {
   updatedAt: string;
 };
 
+// 삭제 시 response로 받는 type
+type DeleteProductResponse = {
+  success: boolean;
+};
+
 export {
+  type DeleteProductResponse,
   type GetProductListResponse,
   type GetProductResponse,
   type PostProductRequest,
