@@ -18,7 +18,15 @@ import {
   FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useGetCategoryList } from "@/hooks/useCategory";
 import { usePostProduct } from "@/hooks/useProduct";
 import { type PostProductRequest } from "@/types/product.types";
 
@@ -55,6 +63,7 @@ const formSchema = z.object({
 const ProductCreatePage = () => {
   const navigate = useNavigate();
   const { mutate: postProduct, isSuccess } = usePostProduct();
+  const { data: categoryList } = useGetCategoryList();
 
   // TODO: useEffect 대신 사용할 방법 찾아보기 -> mutation은 onSuccess 아직 있다고 확인됨
   // React Query v5 스타일: useEffect를 사용한 side effect 처리
@@ -168,16 +177,29 @@ const ProductCreatePage = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Category ID <Asterisk className="w-3 h-3 text-red-500" />
+                  Category <Asterisk className="w-3 h-3 text-red-500" />
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      field.onChange(Number(e.target.value))
-                    }
-                  />
+                  <Select
+                    value={field.value.toString()}
+                    onValueChange={(value) => {
+                      form.setValue("categoryId", Number(value));
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categoryList?.map((category) => (
+                        <SelectItem
+                          key={category.id}
+                          value={category.id.toString()}
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
