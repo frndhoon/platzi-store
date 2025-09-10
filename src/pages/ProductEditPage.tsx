@@ -225,7 +225,7 @@ const ProductEditPage = () => {
                     className="bg-gray-50"
                   />
                 ) : (
-                  <Skeleton className="h-20 w-full" />
+                      <Skeleton className="min-h-16 w-full" />
                 )}
               </div>
             </div>
