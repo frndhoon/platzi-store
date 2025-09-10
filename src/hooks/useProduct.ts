@@ -27,11 +27,20 @@ import {
 
 // Product 조회 useQuery hook
 const useGetProduct = (
-  id: number
+  id: number,
+  options?: { skipRefetch?: boolean }
 ): UseQueryResult<GetProductResponse, AxiosError> => {
+  const queryClient = useQueryClient();
+
+  // usePutProduct에서 설정한 skipRefetch 플래그 확인
+  const shouldSkipRefetch =
+    options?.skipRefetch ||
+    queryClient.getQueryData(["product", id, "skipRefetch"]);
+
   return useQuery({
     queryKey: ["product", id],
-    queryFn: () => getProduct(id)
+    queryFn: () => getProduct(id),
+    enabled: !shouldSkipRefetch // skipRefetch가 true면 쿼리 비활성화
   });
 };
 
@@ -148,6 +157,8 @@ const usePutProduct = (): UseMutationResult<
     },
     onSuccess: ({ id }) => {
       toast.success("상품이 성공적으로 업데이트되었습니다.");
+      // 업데이트 후 해당 쿼리의 재요청을 막기 위해 플래그 설정
+      queryClient.setQueryData(["product", id, "skipRefetch"], true);
       navigate(`/product/${id}`);
     },
     // 클라이언트 사이드 처리이므로 에러가 발생할 가능성은 낮지만, 안전장치로 유지
