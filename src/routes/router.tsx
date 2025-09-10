@@ -19,7 +19,7 @@ const Router = () => {
         <Route path="product">
           <Route index element={<ProductListPage />} />
           <Route path="create" element={<ProductCreatePage />} />
-          <Route path="edit" element={<ProductEditPage />} />
+          <Route path=":id/edit" element={<ProductEditPage />} />
         </Route>
       </Route>
     </Routes>
