@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// 이미지 확대 보기 모달 훅
 const useImageModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
