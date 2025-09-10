@@ -95,13 +95,13 @@ const ProductEditForm = ({
       <div className="flex flex-col gap-3 max-w-4xl mx-auto">
         <div className="text-center py-8">
           <h2 className="text-xl font-semibold text-red-600">
-            상품을 불러올 수 없습니다
+            Failed to load product
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
-            존재하지 않는 상품이거나 서버 오류가 발생했습니다.
+            The product does not exist or a server error occurred.
           </p>
           <Button onClick={onErrorReturn} className="mt-4" variant="outline">
-            상품 목록으로 돌아가기
+            Back to Product List
           </Button>
         </div>
       </div>

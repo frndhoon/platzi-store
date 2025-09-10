@@ -25,11 +25,11 @@ const ProductDetailPage = () => {
   const { data: product, isLoading, error, refetch } = useGetProduct(productId);
   const { mutate: deleteProduct } = useDeleteProduct({
     onSuccess: () => {
-      toast.success("상품이 성공적으로 삭제되었습니다.");
+      toast.success("Product deleted successfully.");
       navigate("/product");
     },
     onError: () => {
-      toast.error("상품 삭제에 실패했습니다.");
+      toast.error("Failed to delete product.");
     }
   });
 
@@ -51,7 +51,7 @@ const ProductDetailPage = () => {
       <div className="max-w-4xl mx-auto p-4">
         <div className="text-center py-8">
           <p className="text-lg text-gray-500 dark:text-gray-400">
-            상품을 찾을 수 없습니다.
+            Product not found.
           </p>
         </div>
       </div>
