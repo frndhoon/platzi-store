@@ -176,6 +176,7 @@ const ProductEditPage = () => {
                       <Input
                         {...field}
                         placeholder="Enter a unique product title"
+                        disabled={isPending}
                       />
                     ) : (
                       <Skeleton className="h-9 w-full" />
@@ -202,6 +203,7 @@ const ProductEditPage = () => {
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           field.onChange(Number(e.target.value))
                         }
+                        disabled={isPending}
                       />
                     ) : (
                       <Skeleton className="h-9 w-full" />
@@ -235,6 +237,7 @@ const ProductEditPage = () => {
                 onClick={() => navigate("/product")}
                 className="flex-1"
                 variant="outline"
+                disabled={isPending}
               >
                 Cancel
               </Button>
