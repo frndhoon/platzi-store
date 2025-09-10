@@ -266,7 +266,11 @@ const ProductEditForm = ({
           <BorderLine />
 
           <div className="flex flex-row gap-2">
-            <CancelButton className="flex-1" onClick={onCancel} />
+            <CancelButton
+              className="flex-1"
+              onClick={onCancel}
+              disabled={isLoading || isPending}
+            />
             <Button
               type="submit"
               className="flex-1"
