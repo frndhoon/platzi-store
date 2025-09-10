@@ -85,7 +85,12 @@ const useDeleteProduct = (options?: {
   return useMutation({
     mutationFn: (id: number) => deleteProduct(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["productList"] }); // 상품 목록 쿼리키 갱신 -> 상품 목록 데이터 갱신
+      // skipRefetch 플래그들도 제거 (삭제된 상품이므로 더 이상 필요 없음)
+      queryClient.removeQueries({ queryKey: ["productList", "skipRefetch"] });
+
+      // productList 캐시를 완전히 제거하여 리다이렉션 시 loading 상태가 되도록 함
+      queryClient.removeQueries({ queryKey: ["productList"] });
+
       options?.onSuccess?.();
     },
     onError: options?.onError
