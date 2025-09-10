@@ -1,7 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Asterisk } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { BorderLine } from "@/components/shared/border-line";
@@ -51,8 +53,17 @@ const formSchema = z.object({
 });
 
 const ProductCreatePage = () => {
-  const { mutate: postProduct } = usePostProduct();
   const navigate = useNavigate();
+  const { mutate: postProduct, isSuccess } = usePostProduct();
+
+  // React Query v5 스타일: useEffect를 사용한 side effect 처리
+  //https://tkdodo.eu/blog/breaking-react-querys-api-on-purpose
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("상품이 성공적으로 등록되었습니다.");
+      navigate("/product");
+    }
+  }, [isSuccess, navigate]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

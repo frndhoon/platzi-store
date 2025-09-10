@@ -6,8 +6,6 @@ import {
   type UseQueryResult
 } from "@tanstack/react-query";
 import { type AxiosError } from "axios";
-import { useNavigate } from "react-router";
-import { toast } from "sonner";
 
 import {
   deleteProduct,
@@ -61,14 +59,11 @@ const usePostProduct = (): UseMutationResult<
   AxiosError,
   PostProductRequest
 > => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (product: PostProductRequest) => postProduct(product),
     onSuccess: () => {
-      toast.success("상품이 성공적으로 등록되었습니다.");
-      navigate("/product");
       queryClient.invalidateQueries({ queryKey: ["productList"] });
     },
     onError: () => {
@@ -89,7 +84,6 @@ const useDeleteProduct = (): UseMutationResult<
   return useMutation({
     mutationFn: (id: number) => deleteProduct(id),
     onSuccess: () => {
-      toast.success("상품이 성공적으로 삭제되었습니다.");
       queryClient.invalidateQueries({ queryKey: ["productList"] }); // 상품 목록 쿼리키 갱신 -> 상품 목록 데이터 갱신
     },
     onError: () => {
@@ -106,7 +100,6 @@ const usePutProduct = (): UseMutationResult<
   AxiosError,
   { id: number; product: PutProductRequest }
 > => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -152,14 +145,11 @@ const usePutProduct = (): UseMutationResult<
         );
       }
 
-      // 롤백을 위해 이전 데이터 반환
-      return { previousProduct, previousProductList };
-    },
-    onSuccess: ({ id }) => {
-      toast.success("상품이 성공적으로 업데이트되었습니다.");
       // 업데이트 후 해당 쿼리의 재요청을 막기 위해 플래그 설정
       queryClient.setQueryData(["product", id, "skipRefetch"], true);
-      navigate(`/product/${id}`);
+
+      // 롤백을 위해 이전 데이터 반환
+      return { previousProduct, previousProductList };
     },
     // 클라이언트 사이드 처리이므로 에러가 발생할 가능성은 낮지만, 안전장치로 유지
     onError: (_error, { id }, context) => {
@@ -169,7 +159,6 @@ const usePutProduct = (): UseMutationResult<
       if (context?.previousProductList) {
         queryClient.setQueryData(["productList"], context.previousProductList);
       }
-      toast.error("상품 업데이트에 실패했습니다. 다시 시도해주세요.");
     }
   });
 };
