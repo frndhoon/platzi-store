@@ -10,7 +10,7 @@ const ProductCreatePage = () => {
   const navigate = useNavigate();
   const { mutate: postProduct, isPending } = usePostProduct({
     onSuccess: () => {
-      toast.success("상품이 성공적으로 등록되었습니다.");
+      toast.success("Product created successfully.");
       navigate("/product");
     }
   });

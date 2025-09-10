@@ -12,11 +12,11 @@ const ProductEditPage = () => {
   const navigate = useNavigate();
   const { mutate: putProduct, isPending } = usePutProduct({
     onSuccess: () => {
-      toast.success("상품이 성공적으로 업데이트되었습니다.");
+      toast.success("Product updated successfully.");
       navigate(`/product/${id}`);
     },
     onError: () => {
-      toast.error("상품 업데이트에 실패했습니다.");
+      toast.error("Failed to update product.");
     }
   });
   const { data: product, isLoading, isError } = useGetProduct(Number(id));
