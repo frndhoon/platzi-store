@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useNavigate } from "react-router";
 
-import { ProductModal } from "@/components/product/product-modal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type Product } from "@/types/product.types";
 
@@ -11,17 +10,13 @@ type ProductCardProps = {
 
 // 상품 단일 출력 카드
 const ProductCard = ({ product }: ProductCardProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { id, title, images, price, description } = product;
   const thumbnail = images[0];
 
   const handleCardClick = (): void => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = (): void => {
-    setIsModalOpen(false);
+    navigate(`/product/${id}`);
   };
 
   return (
@@ -47,22 +42,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
           />
 
           <div className="space-y-2">
-            <p>{price}$</p>
+            <p>${price}</p>
             {/* line-clamp-3: 3줄까지 표시하고,
              overflow-hidden: 넘치는 부분은 숨김 */}
             <p className="line-clamp-3 overflow-hidden">{description}</p>
           </div>
         </CardContent>
       </Card>
-
-      {/* 상품 상세 모달 */}
-      {isModalOpen && (
-        <ProductModal
-          productId={id}
-          isOpen={isModalOpen}
-          onClose={handleModalClose}
-        />
-      )}
     </>
   );
 };
