@@ -162,7 +162,7 @@ const ProductCreatePage = () => {
     <div className="flex flex-col gap-3 max-w-4xl mx-auto">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold">Product Create</h1>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           Please fill out the form below to create a new product.
         </p>
         <p className="text-sm justify-end flex items-center gap-1">
@@ -340,11 +340,11 @@ const ProductCreatePage = () => {
                       </div>
                     ) : (
                       <div className="p-8 border-2 border-dashed border-gray-300 rounded-lg text-center">
-                        <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                        <p className="text-sm text-gray-500 mb-1">
+                        <ImageIcon className="w-12 h-12 text-gray-400 dark:text-gray-300 mx-auto mb-3" />
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
                           Upload images
                         </p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-gray-400 dark:text-gray-300">
                           JPG, PNG, GIF files can be selected or dragged and
                           dropped to upload
                         </p>
@@ -364,7 +364,7 @@ const ProductCreatePage = () => {
                         Select files ({field.value.length}/{MAX_IMAGE_COUNT})
                       </Button>
                     ) : (
-                      <p className="text-sm text-gray-500 text-center">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
                         You can upload up to{" "}
                         <span className="font-bold text-red-500">
                           {MAX_IMAGE_COUNT} images.

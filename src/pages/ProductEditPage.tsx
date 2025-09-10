@@ -96,7 +96,7 @@ const ProductEditPage = () => {
           <h2 className="text-xl font-semibold text-red-600">
             상품을 불러올 수 없습니다
           </h2>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 dark:text-gray-400 mt-2">
             존재하지 않는 상품이거나 서버 오류가 발생했습니다.
           </p>
           <Button
@@ -115,7 +115,7 @@ const ProductEditPage = () => {
     <div className="flex flex-col gap-3 max-w-4xl mx-auto">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold">Product Edit</h1>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           Edit the product information below.
         </p>
         <p className="text-sm justify-end flex items-center gap-1">
@@ -192,7 +192,7 @@ const ProductEditPage = () => {
 
           <BorderLine />
 
-          <div className="flex flex-col gap-3 cursor-not-allowed text-gray-500">
+          <div className="flex flex-col gap-3 cursor-not-allowed text-gray-500 dark:text-gray-400">
             <div className="flex flex-col gap-2 ">
               <Label>Category</Label>
               {isProductLoaded ? (
