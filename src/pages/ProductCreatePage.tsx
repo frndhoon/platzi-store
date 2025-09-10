@@ -70,7 +70,7 @@ const formSchema = z.object({
 
 const ProductCreatePage = () => {
   const navigate = useNavigate();
-  const { mutate: postProduct, isSuccess } = usePostProduct();
+  const { mutate: postProduct, isSuccess, isPending } = usePostProduct();
   const { data: categoryList, isLoading, isError } = useGetCategoryList();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -188,6 +188,7 @@ const ProductCreatePage = () => {
                   <Input
                     {...field}
                     placeholder="Enter a unique product title"
+                    disabled={isLoading || isPending}
                   />
                 </FormControl>
                 <FormMessage />
@@ -210,6 +211,7 @@ const ProductCreatePage = () => {
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       field.onChange(Number(e.target.value))
                     }
+                    disabled={isLoading || isPending}
                   />
                 </FormControl>
                 <FormMessage />
@@ -229,6 +231,7 @@ const ProductCreatePage = () => {
                   <Textarea
                     {...field}
                     placeholder="Enter a product description"
+                    disabled={isLoading || isPending}
                   />
                 </FormControl>
                 <FormMessage />
@@ -295,6 +298,7 @@ const ProductCreatePage = () => {
                       multiple
                       onChange={handleFileChange}
                       className="hidden"
+                      disabled={isLoading || isPending}
                     />
 
                     {/* 이미지 미리보기 */}
@@ -316,6 +320,7 @@ const ProductCreatePage = () => {
                                 size="sm"
                                 onClick={() => removeImage(index)}
                                 className="absolute -top-2 -right-2 w-6 h-6 p-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                disabled={isLoading || isPending}
                               >
                                 <X className="w-3 h-3" />
                               </Button>
@@ -343,6 +348,7 @@ const ProductCreatePage = () => {
                         variant="outline"
                         onClick={handleFileUpload}
                         className="w-full"
+                        disabled={isLoading || isPending}
                       >
                         <Upload className="w-4 h-4 mr-2" />
                         Select files ({field.value.length}/{MAX_IMAGE_COUNT})
@@ -370,7 +376,11 @@ const ProductCreatePage = () => {
               onClick={() => navigate("/product")}
               disabled={isLoading || isPending}
             />
-            <Button type="submit" className="flex-1">
+            <Button
+              type="submit"
+              className="flex-1"
+              disabled={isLoading || isPending}
+            >
               Create
             </Button>
           </div>
