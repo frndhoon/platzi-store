@@ -30,6 +30,7 @@ import { MAX_IMAGE_COUNT } from "@/constants/product.constant";
 import { useGetCategoryList } from "@/hooks/useCategory";
 import { usePostProduct } from "@/hooks/useProduct";
 import { type PostProductRequest } from "@/types/product.types";
+import { parseAndLimitNumbers } from "@/utils/number.utils";
 
 // TODO: 해당 페이지 리팩토링 필요 (컴포넌트 분리)
 
@@ -73,18 +74,6 @@ const ProductCreatePage = () => {
   const { mutate: postProduct, isSuccess, isPending } = usePostProduct();
   const { data: categoryList, isLoading, isError } = useGetCategoryList();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // 숫자 입력값을 범위 내로 제한하는 헬퍼 함수
-  const constrainNumberValue = (
-    value: string,
-    min: number,
-    max: number
-  ): number => {
-    const numValue = Number(value);
-    if (numValue > max) return max;
-    if (numValue < min) return min;
-    return numValue || min;
-  };
 
   // 카테고리 Select placeholder 메시지 결정
   const getCategoryPlaceholder = (fieldValue: number | null) => {
@@ -224,13 +213,11 @@ const ProductCreatePage = () => {
                       type="number"
                       {...field}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        field.onChange(
-                          constrainNumberValue(e.target.value, 1, 100)
-                        );
+                        field.onChange(parseAndLimitNumbers(e.target.value));
                       }}
                       disabled={isLoading || isPending}
                       min={1}
-                      max={100}
+                      max={1000}
                     />
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 select-none">
                       $
