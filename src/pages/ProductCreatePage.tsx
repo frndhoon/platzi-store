@@ -121,12 +121,32 @@ const ProductCreatePage = () => {
     const currentImages = form.getValues("images");
     const newImages = [...currentImages];
 
-    // 선택된 파일 수만큼 랜덤 이미지 URL 생성
+    // 허용된 파일 타입 정의
+    const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+    const maxFileSize = 5 * 1024 * 1024; // 5MB
+
+    // 선택된 파일 수만큼 유효성 검사 및 랜덤 이미지 URL 생성
     for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      // 파일 타입 검증
+      if (!allowedTypes.includes(file.type)) {
+        toast.error("Only PNG and JPG files are allowed.");
+        continue;
+      }
+
+      // 파일 크기 검증
+      if (file.size > maxFileSize) {
+        toast.error("File size must be less than 5MB.");
+        continue;
+      }
+
+      // 최대 이미지 개수 확인
       if (newImages.length >= MAX_IMAGE_COUNT) {
         toast.error(`You can upload up to ${MAX_IMAGE_COUNT} images.`);
         break;
       }
+
       const newImageUrl = generateRandomImageUrl();
       newImages.push(newImageUrl);
     }
@@ -324,7 +344,7 @@ const ProductCreatePage = () => {
                     <input
                       ref={fileInputRef}
                       type="file"
-                      accept="image/*"
+                      accept="image/png,image/jpeg,image/jpg"
                       multiple
                       onChange={handleFileChange}
                       className="hidden"
@@ -365,8 +385,7 @@ const ProductCreatePage = () => {
                           Upload images
                         </p>
                         <p className="text-xs text-gray-400 dark:text-gray-300">
-                          JPG, PNG, GIF files can be selected or dragged and
-                          dropped to upload
+                          JPG, PNG files can be selected to upload
                         </p>
                       </div>
                     )}
