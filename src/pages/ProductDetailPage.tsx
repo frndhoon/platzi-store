@@ -83,7 +83,9 @@ const ProductDetailPage = () => {
             ) : (
               <>
                 <h1 className="text-2xl font-bold">{product?.title}</h1>
-                <p className="text-xl font-semibold">${product?.price}</p>
+                <p className="text-xl font-semibold text-green-500">
+                  ${product?.price}
+                </p>
               </>
             )}
           </div>

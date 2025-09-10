@@ -41,7 +41,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className="w-48 h-48 rounded-md object-cover"
           />
 
-          <div className="space-y-2">
+          <div className="space-y-2 flex flex-col items-center">
             <p className="text-lg font-bold text-green-500">${price}</p>
             {/* line-clamp-3: 3줄까지 표시하고,
              overflow-hidden: 넘치는 부분은 숨김 */}
