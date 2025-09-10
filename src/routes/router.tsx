@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router";
 
+import { ListLayout } from "@/components/layout/list-layout";
 import { MainLayout } from "@/components/layout/main-layout";
 import NotFoundPage from "@/pages/NotFoundPage";
 import ProductCreatePage from "@/pages/ProductCreatePage";
@@ -19,7 +20,9 @@ const Router = () => {
         <Route index element={<Navigate to="product" replace />} />
 
         <Route path="product">
-          <Route index element={<ProductListPage />} />
+          <Route element={<ListLayout />}>
+            <Route index element={<ProductListPage />} />
+          </Route>
           <Route path="create" element={<ProductCreatePage />} />
           <Route path=":id" element={<ProductDetailPage />} />
           <Route path=":id/edit" element={<ProductEditPage />} />
