@@ -7,7 +7,7 @@ const MainLayout = () => {
   return (
     <>
       <Header />
-      <main className="mx-4">
+      <main className="mx-10">
         <Toaster position="top-center" />
         <Outlet />
       </main>

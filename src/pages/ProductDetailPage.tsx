@@ -45,7 +45,7 @@ const ProductDetailPage = () => {
   // 상품 데이터가 없을 때
   if (!product && !isLoading) {
     return (
-      <div className="max-w-4xl mx-auto p-4">
+      <div className="p-4">
         <div className="text-center py-8">
           <p className="text-lg text-gray-500 dark:text-gray-400">
             Product not found.
@@ -56,7 +56,7 @@ const ProductDetailPage = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="p-4">
       <div className="flex flex-col gap-6">
         {/* 상품 이미지들 */}
         <ProductImageCarousel

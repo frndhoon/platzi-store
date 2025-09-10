@@ -92,7 +92,7 @@ const ProductEditForm = ({
   // Error 상태 처리
   if (isError) {
     return (
-      <div className="flex flex-col gap-3 max-w-4xl mx-auto">
+      <div className="flex flex-col gap-3">
         <div className="text-center py-8">
           <h2 className="text-xl font-semibold text-red-600">
             Failed to load product
@@ -109,7 +109,7 @@ const ProductEditForm = ({
   }
 
   return (
-    <div className="flex flex-col gap-3 max-w-4xl mx-auto">
+    <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold">Product Edit</h1>
         <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -220,8 +220,8 @@ const ProductEditForm = ({
                     </CarouselContent>
                     {product.images.length > 1 && (
                       <>
-                        <CarouselPrevious className="hidden sm:flex" />
-                        <CarouselNext className="hidden sm:flex" />
+                        <CarouselPrevious />
+                        <CarouselNext />
                       </>
                     )}
                   </Carousel>

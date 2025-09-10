@@ -49,8 +49,8 @@ const ProductImageCarousel = ({
         ))}
       </CarouselContent>
 
-      <CarouselPrevious className="hidden sm:flex" />
-      <CarouselNext className="hidden lg:flex" />
+      <CarouselPrevious />
+      <CarouselNext />
     </Carousel>
   );
 };

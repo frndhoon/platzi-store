@@ -108,7 +108,7 @@ const ProductCreateForm = ({
   };
 
   return (
-    <div className="flex flex-col gap-3 max-w-4xl mx-auto">
+    <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold">Product Create</h1>
         <p className="text-sm text-gray-600 dark:text-gray-400">
