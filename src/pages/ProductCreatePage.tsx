@@ -205,14 +205,19 @@ const ProductCreatePage = () => {
                   Price <Asterisk className="w-3 h-3 text-red-500" />
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      field.onChange(Number(e.target.value))
-                    }
-                    disabled={isLoading || isPending}
-                  />
+                  <div className="relative">
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        field.onChange(Number(e.target.value))
+                      }
+                      disabled={isLoading || isPending}
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 select-none">
+                      $
+                    </span>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -159,14 +159,20 @@ const ProductEditPage = () => {
                 </FormLabel>
                 <FormControl>
                   {isProductLoaded ? (
-                    <Input
-                      type="number"
-                      {...field}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        field.onChange(Number(e.target.value))
-                      }
-                      disabled={isPending}
-                    />
+                    <div className="relative">
+                      <Input
+                        type="number"
+                        {...field}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          field.onChange(Number(e.target.value))
+                        }
+                        disabled={isPending}
+                        className="pr-8"
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 select-none">
+                        $
+                      </span>
+                    </div>
                   ) : (
                     <Skeleton className="h-9 w-full" />
                   )}
