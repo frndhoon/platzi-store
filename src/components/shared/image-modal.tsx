@@ -22,12 +22,15 @@ const ImageModal = ({
         onPointerDown={onClose}
       >
         <div className="flex items-center justify-center" onClick={onClose}>
-          <img
-            src={imageUrl}
-            alt={imageAlt}
-            className="max-w-full max-h-[85vh] object-contain rounded-lg cursor-zoom-out"
-            onClick={onClose}
-          />
+          {/* isOpen이 true이고 imageUrl이 있을 때만, 이미지 렌더링 */}
+          {isOpen && imageUrl && (
+            <img
+              src={imageUrl}
+              alt={imageAlt || "Image"}
+              className="max-w-full max-h-[85vh] object-contain rounded-lg cursor-zoom-out"
+              onClick={onClose}
+            />
+          )}
         </div>
       </DialogContent>
     </Dialog>
