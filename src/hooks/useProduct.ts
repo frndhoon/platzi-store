@@ -13,8 +13,7 @@ import {
   deleteProduct,
   getProduct,
   getProductList,
-  postProduct,
-  putProduct
+  postProduct
 } from "@/api/product.api";
 import {
   type DeleteProductResponse,
@@ -92,6 +91,7 @@ const useDeleteProduct = (): UseMutationResult<
 };
 
 // Product 업데이트 useMutation hook
+// (서버 API 500 에러로 인해 서버 API 호출 없이 react-query로 기존 서버의 List, 단일 Product 데이터 상태 관리를 직접 수정(setQueryData))
 const usePutProduct = (): UseMutationResult<
   PutProductResponse,
   AxiosError,
@@ -101,20 +101,64 @@ const usePutProduct = (): UseMutationResult<
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, product }) => putProduct(id, product),
+    mutationFn: async ({ id, product }) => {
+      // 더미 응답 반환 (실제로는 서버 호출하지 않음)
+      return { id, ...product } as PutProductResponse;
+    },
+    // 클라이언트 사이드에서 즉시 데이터 업데이트
+    onMutate: async ({ id, product }) => {
+      // 진행 중인 쿼리들을 취소하여 업데이트가 실제 서버 데이터가 클라이언트 query 데이터에 덮어쓰이지 않도록 함
+      await queryClient.cancelQueries({ queryKey: ["product", id] });
+      await queryClient.cancelQueries({ queryKey: ["productList"] });
+
+      // 현재 데이터를 백업 (롤백용)
+      const previousProduct = queryClient.getQueryData<GetProductResponse>([
+        "product",
+        id
+      ]);
+      const previousProductList =
+        queryClient.getQueryData<GetProductListResponse>(["productList"]);
+
+      // 클라이언트 사이드에서 query 데이터 직접 업데이트
+      if (previousProduct) {
+        queryClient.setQueryData<GetProductResponse>(["product", id], {
+          // 해당 query키를 가진 클라이언트에서의 서버 데이터 직접 업데이트
+          ...previousProduct, // 이전 데이터 유지
+          ...product, // 새 데이터 업데이트
+          updatedAt: new Date().toISOString() // 현재 날짜로 업데이트
+        });
+      }
+
+      // 상품 목록도 업데이트
+      if (previousProductList) {
+        const updatedProductList = previousProductList.map((item) => {
+          if (item.id === id) {
+            return { ...item, ...product, updatedAt: new Date().toISOString() };
+          }
+          return item;
+        });
+        queryClient.setQueryData<GetProductListResponse>(
+          ["productList"], // 해당 query키를 가진 클라이언트에서의 서버 데이터 직접 업데이트
+          updatedProductList
+        );
+      }
+
+      // 롤백을 위해 이전 데이터 반환
+      return { previousProduct, previousProductList };
+    },
     onSuccess: ({ id }) => {
       toast.success("상품이 성공적으로 업데이트되었습니다.");
-      queryClient.invalidateQueries({ queryKey: ["product", id] });
-      queryClient.invalidateQueries({ queryKey: ["productList"] });
       navigate(`/product/${id}`);
     },
-    // TODO: 현재 500 에러 발생
-    // fake api 사용 중이기 때문에 서버에서 어떤 문제가 발생했는지 정확하게 파악이 어려움
-    // 다른 쪽으로 어떻게 해야할지 생각해보기
-    // https://github.com/PlatziLabs/fake-api-backend/issues/47 (참고, 본인과 같은 상황이며 서버 측은 답변이 없는 상황)
-    // Query로 서버 상태 관리 중인데, 500 에러가 나는 put 메소드만 서버와 직접 HTTP 통신이 아닌, query로 변경(대리님 의견이며, 본인 또한 공감하고 이해하였음)
-    onError: () => {
-      toast.error("상품 업데이트에 실패했습니다.");
+    // 클라이언트 사이드 처리이므로 에러가 발생할 가능성은 낮지만, 안전장치로 유지
+    onError: (_error, { id }, context) => {
+      if (context?.previousProduct) {
+        queryClient.setQueryData(["product", id], context.previousProduct);
+      }
+      if (context?.previousProductList) {
+        queryClient.setQueryData(["productList"], context.previousProductList);
+      }
+      toast.error("상품 업데이트에 실패했습니다. 다시 시도해주세요.");
     }
   });
 };
