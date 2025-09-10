@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router";
+import { toast } from "sonner";
 
 import { BorderLine } from "@/components/shared/border-line";
 import { DeleteButton } from "@/components/shared/delete-button";
@@ -22,14 +23,21 @@ const ProductDetailPage = () => {
   const productId = Number(id);
 
   const { data: product, isLoading, error, refetch } = useGetProduct(productId);
-  const { mutate: deleteProduct } = useDeleteProduct();
+  const { mutate: deleteProduct } = useDeleteProduct({
+    onSuccess: () => {
+      toast.success("상품이 성공적으로 삭제되었습니다.");
+      navigate("/product");
+    },
+    onError: () => {
+      toast.error("상품 삭제에 실패했습니다.");
+    }
+  });
 
   const { isOpen, selectedImage, imageAlt, openModal, closeModal } =
     useImageModal();
 
   const handleDelete = (): void => {
     deleteProduct(productId);
-    navigate("/product");
   };
 
   // 에러 발생 시
@@ -126,6 +134,7 @@ const ProductDetailPage = () => {
             <Button
               onClick={() => navigate(`/product/${productId}/edit`)}
               className="flex-1"
+              disabled={isLoading}
             >
               Edit
             </Button>
