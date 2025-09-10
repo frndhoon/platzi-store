@@ -111,6 +111,8 @@ const usePutProduct = (): UseMutationResult<
     // TODO: 현재 500 에러 발생
     // fake api 사용 중이기 때문에 서버에서 어떤 문제가 발생했는지 정확하게 파악이 어려움
     // 다른 쪽으로 어떻게 해야할지 생각해보기
+    // https://github.com/PlatziLabs/fake-api-backend/issues/47 (참고, 본인과 같은 상황이며 서버 측은 답변이 없는 상황)
+    // Query로 서버 상태 관리 중인데, 500 에러가 나는 put 메소드만 서버와 직접 HTTP 통신이 아닌, query로 변경(대리님 의견이며, 본인 또한 공감하고 이해하였음)
     onError: () => {
       toast.error("상품 업데이트에 실패했습니다.");
     }
