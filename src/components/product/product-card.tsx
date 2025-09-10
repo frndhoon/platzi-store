@@ -42,7 +42,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           />
 
           <div className="space-y-2">
-            <p>${price}</p>
+            <p className="text-lg font-bold text-green-500">${price}</p>
             {/* line-clamp-3: 3줄까지 표시하고,
              overflow-hidden: 넘치는 부분은 숨김 */}
             <p className="line-clamp-3 overflow-hidden">{description}</p>
