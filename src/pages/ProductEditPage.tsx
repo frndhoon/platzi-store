@@ -3,9 +3,11 @@ import { Pencil } from "lucide-react";
 import { useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { BorderLine } from "@/components/shared/border-line";
+import { CancelButton } from "@/components/shared/cancel-button";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -60,7 +62,15 @@ const ProductEditPage = () => {
   }, [product, form]);
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    putProduct({ id: Number(id), product: data });
+    putProduct(
+      { id: Number(id), product: data },
+      {
+        onSuccess: () => {
+          toast.success("상품이 성공적으로 업데이트되었습니다.");
+          navigate(`/product/${id}`);
+        }
+      }
+    );
   };
 
   // Error 상태 처리
@@ -224,15 +234,10 @@ const ProductEditPage = () => {
               </div>
 
               <div className="flex flex-row gap-2">
-                <Button
-                  type="button"
-                  onClick={() => navigate(-1)}
+                <CancelButton
                   className="flex-1"
-                  variant="outline"
-                  disabled={isPending}
-                >
-                  Cancel
-                </Button>
+                  onClick={() => navigate(`/product/${id}`)}
+                />
                 <Button
                   type="submit"
                   className="flex-1"

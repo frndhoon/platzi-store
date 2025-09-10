@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { z } from "zod";
 
 import { BorderLine } from "@/components/shared/border-line";
+import { CancelButton } from "@/components/shared/cancel-button";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -50,8 +51,8 @@ const formSchema = z.object({
 });
 
 const ProductCreatePage = () => {
-  const navigate = useNavigate();
   const { mutate: postProduct } = usePostProduct();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -200,14 +201,10 @@ const ProductCreatePage = () => {
           <BorderLine />
 
           <div className="flex flex-row gap-2">
-            <Button
-              type="button"
-              onClick={() => navigate("/product")}
+            <CancelButton
               className="flex-1"
-              variant="outline"
-            >
-              Cancel
-            </Button>
+              onClick={() => navigate("/product")}
+            />
             <Button type="submit" className="flex-1">
               Create
             </Button>
