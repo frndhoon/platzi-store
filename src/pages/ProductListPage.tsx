@@ -11,7 +11,7 @@ const ProductListPage = () => {
 
   // 에러 발생 시
   if (error) {
-    return <ErrorDisplay onRefetch={refetch} />;
+    return <ErrorDisplay onRefetch={refetch} error={error} />;
   }
 
   // 로딩 중일 때

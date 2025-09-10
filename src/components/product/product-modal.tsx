@@ -35,7 +35,7 @@ const ProductModal = ({ productId, isOpen, onClose }: ProductModalProps) => {
         </DialogHeader>
 
         {/* 에러 발생 시  */}
-        {error && <ErrorDisplay onRefetch={refetch} />}
+        {error && <ErrorDisplay onRefetch={refetch} error={error} />}
 
         {!error && (
           <>

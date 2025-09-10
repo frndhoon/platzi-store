@@ -29,7 +29,7 @@ const ProductDetailPage = () => {
 
   // 에러 발생 시
   if (error) {
-    return <ErrorDisplay onRefetch={refetch} />;
+    return <ErrorDisplay onRefetch={refetch} error={error} />;
   }
 
   // 상품 데이터가 없을 때
