@@ -226,7 +226,7 @@ const ProductEditPage = () => {
               <div className="flex flex-row gap-2">
                 <Button
                   type="button"
-                  onClick={() => navigate("/product")}
+                  onClick={() => navigate(-1)}
                   className="flex-1"
                   variant="outline"
                   disabled={isPending}
