@@ -16,6 +16,7 @@ type Product = {
   creationAt?: string;
 };
 
+// 단일 product 데이터를 받아올 때 response type
 type GetProductResponse = Product;
 
 // 여러 개의 product 데이터를 받아올 때 response type
@@ -44,6 +45,7 @@ type PutProductRequest = {
   price: number;
 };
 
+// 수정 시 response로 받는 product type
 type PutProductResponse = Product;
 
 export {
