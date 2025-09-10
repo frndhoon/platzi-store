@@ -63,7 +63,7 @@ const formSchema = z.object({
 const ProductCreatePage = () => {
   const navigate = useNavigate();
   const { mutate: postProduct, isSuccess } = usePostProduct();
-  const { data: categoryList } = useGetCategoryList();
+  const { data: categoryList, isLoading, isError } = useGetCategoryList();
 
   // TODO: useEffect 대신 사용할 방법 찾아보기 -> mutation은 onSuccess 아직 있다고 확인됨
   // React Query v5 스타일: useEffect를 사용한 side effect 처리
@@ -81,7 +81,7 @@ const ProductCreatePage = () => {
       title: "",
       price: 1,
       description: "",
-      categoryId: 1,
+      categoryId: 0,
       images: [""]
     }
   });
@@ -181,13 +181,24 @@ const ProductCreatePage = () => {
                 </FormLabel>
                 <FormControl>
                   <Select
-                    value={field.value.toString()}
+                    value={
+                      field.value === 0 ? undefined : field.value.toString()
+                    }
                     onValueChange={(value) => {
                       form.setValue("categoryId", Number(value));
                     }}
+                    disabled={isLoading || isError}
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a category" />
+                    <SelectTrigger className="w-full">
+                      <SelectValue
+                        placeholder={
+                          isLoading
+                            ? "Loading..."
+                            : isError
+                              ? "Failed to load categories. Please refresh."
+                              : "Select a category"
+                        }
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       {categoryList?.map((category) => (
