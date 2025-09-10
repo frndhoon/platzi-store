@@ -1,6 +1,10 @@
 // 070/009 와 같은 건 각 70, 9로 만들기
 // 999에서 아무숫자를 입력하면 1000이 되기(최댓값 1000)
-const parseAndLimitNumbers = (input: string): (number | string)[] => {
+const limitNumber = (
+  input: string,
+  min: number,
+  max: number
+): (number | string)[] => {
   // "/"로 분리하여 각 부분을 처리
   const parts = input.split("/");
 
@@ -13,13 +17,17 @@ const parseAndLimitNumbers = (input: string): (number | string)[] => {
       return "";
     }
 
+    if (num < min) {
+      return min;
+    }
+
     // 999보다 크거나 같으면 1000으로 설정
-    if (num >= 999) {
-      return 1000;
+    if (num >= max) {
+      return max;
     }
 
     return num;
   });
 };
 
-export { parseAndLimitNumbers };
+export { limitNumber };

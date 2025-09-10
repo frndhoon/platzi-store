@@ -30,7 +30,7 @@ import { MAX_IMAGE_COUNT } from "@/constants/product.constant";
 import { useGetCategoryList } from "@/hooks/useCategory";
 import { usePostProduct } from "@/hooks/useProduct";
 import { type PostProductRequest } from "@/types/product.types";
-import { parseAndLimitNumbers } from "@/utils/number.utils";
+import { limitNumber } from "@/utils/number.utils";
 
 // TODO: 해당 페이지 리팩토링 필요 (컴포넌트 분리)
 
@@ -213,7 +213,7 @@ const ProductCreatePage = () => {
                       type="number"
                       {...field}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        field.onChange(parseAndLimitNumbers(e.target.value));
+                        field.onChange(limitNumber(e.target.value, 1, 1000));
                       }}
                       disabled={isLoading || isPending}
                       min={1}
