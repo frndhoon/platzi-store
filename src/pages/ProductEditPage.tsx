@@ -113,11 +113,9 @@ const ProductEditPage = () => {
 
       <BorderLine />
 
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-4">
           <Form {...form}>
             <form
-              className="flex flex-col gap-4"
+          className="flex flex-col gap-3"
               onSubmit={form.handleSubmit(onSubmit)}
             >
               <FormField
@@ -171,6 +169,8 @@ const ProductEditPage = () => {
                 )}
               />
 
+          <BorderLine />
+
               <div className="flex flex-col gap-3 cursor-not-allowed text-gray-500">
                 <div className="flex flex-col gap-2 ">
                   <Label>Category</Label>
@@ -203,9 +203,8 @@ const ProductEditPage = () => {
                   )}
                 </div>
 
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-1">
-                    <label className="text-sm font-medium">Description</label>
+            <div className="flex flex-col gap-2">
+              <Label>Description</Label>
                     {isProductLoaded ? (
                       <Textarea
                         value={product.description}
@@ -215,7 +214,6 @@ const ProductEditPage = () => {
                     ) : (
                       <Skeleton className="h-20 w-full" />
                     )}
-                  </div>
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -235,6 +233,8 @@ const ProductEditPage = () => {
                 </div>
               </div>
 
+          <BorderLine />
+
               <div className="flex flex-row gap-2">
                 <CancelButton
                   className="flex-1"
@@ -250,8 +250,6 @@ const ProductEditPage = () => {
               </div>
             </form>
           </Form>
-        </div>
-      </div>
     </div>
   );
 };
