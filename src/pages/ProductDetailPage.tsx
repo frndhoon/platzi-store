@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { BorderLine } from "@/components/shared/border-line";
 import { DeleteButton } from "@/components/shared/delete-button";
 import { ErrorDisplay } from "@/components/shared/error-display";
+import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -104,11 +105,20 @@ const ProductDetailPage = () => {
 
           <BorderLine />
 
-          <DeleteButton
-            onDelete={handleDelete}
-            target="product"
-            disabled={isLoading}
-          />
+          <div className="flex flex-row gap-2">
+            <DeleteButton
+              onDelete={handleDelete}
+              target="product"
+              disabled={isLoading}
+              className="flex-1"
+            />
+            <Button
+              onClick={() => navigate(`/product/${productId}/edit`)}
+              className="flex-1"
+            >
+              Edit
+            </Button>
+          </div>
         </div>
       </div>
     </div>

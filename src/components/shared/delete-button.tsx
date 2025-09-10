@@ -15,15 +15,21 @@ type DeleteButtonProps = {
   onDelete: () => void;
   target: string;
   disabled?: boolean;
+  className?: string;
 };
 
 // 삭제 버튼
 // 버튼 클릭 이벤트 시 alert dialog 렌더링
-const DeleteButton = ({ onDelete, target, disabled }: DeleteButtonProps) => {
+const DeleteButton = ({
+  onDelete,
+  target,
+  disabled,
+  className
+}: DeleteButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" disabled={disabled}>
+        <Button variant="destructive" disabled={disabled} className={className}>
           Delete
         </Button>
       </AlertDialogTrigger>
