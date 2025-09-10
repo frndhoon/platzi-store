@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router";
 
 import { MainLayout } from "@/components/layout/main-layout";
+import NotFoundPage from "@/pages/NotFoundPage";
 import ProductCreatePage from "@/pages/ProductCreatePage";
 import ProductDetailPage from "@/pages/ProductDetailPage";
 import ProductEditPage from "@/pages/ProductEditPage";
@@ -24,6 +25,7 @@ const Router = () => {
           <Route path=":id/edit" element={<ProductEditPage />} />
         </Route>
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
