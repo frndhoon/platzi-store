@@ -114,60 +114,50 @@ const usePutProduct = (): UseMutationResult<
     },
     // 클라이언트 사이드에서 즉시 데이터 업데이트
     onMutate: async ({ id, product }) => {
-      // 진행 중인 쿼리들을 취소하여 업데이트가 실제 서버 데이터가 클라이언트 query 데이터에 덮어쓰이지 않도록 함
-      await queryClient.cancelQueries({ queryKey: ["product", id] });
-      await queryClient.cancelQueries({ queryKey: ["productList"] });
+      // 우선, 서버에서 최신 데이터 가져오기
+      const latestProduct = await queryClient.fetchQuery({
+        queryKey: ["product", id],
+        queryFn: () => getProduct(id)
+      });
+      const latestProductList = await queryClient.fetchQuery({
+        queryKey: ["productList"],
+        queryFn: getProductList
+      });
 
-      // 현재 데이터를 백업 (롤백용)
-      const previousProduct = queryClient.getQueryData<GetProductResponse>([
-        "product",
-        id
-      ]);
-      const previousProductList =
-        queryClient.getQueryData<GetProductListResponse>(["productList"]);
-
-      // 클라이언트 사이드에서 query 데이터 직접 업데이트
-      if (previousProduct) {
-        queryClient.setQueryData<GetProductResponse>(["product", id], {
-          // 해당 query키를 가진 클라이언트에서의 서버 데이터 직접 업데이트
-          ...previousProduct, // 이전 데이터 유지
-          ...product, // 새 데이터 업데이트
-          updatedAt: new Date().toISOString() // 현재 날짜로 업데이트
-        });
+      // 가져온 데이터를 클라이언트에서 수정
+      if (latestProduct) {
+        const updatedProduct = {
+          ...latestProduct, // 기존 모든 필드 유지
+          ...product // 새로운 데이터로 수정된 필드만 업데이트(title, price)
+        };
+        console.log("업데이트된 상품 데이터:", updatedProduct);
+        queryClient.setQueryData<GetProductResponse>(
+          ["product", id],
+          updatedProduct
+        );
       }
-
-      // 상품 목록도 업데이트
-      if (previousProductList) {
-        const updatedProductList = previousProductList.map((item) => {
+      if (latestProductList) {
+        const updatedProductList = latestProductList.map((item) => {
           if (item.id === id) {
-            return { ...item, ...product, updatedAt: new Date().toISOString() };
+            return { ...item, ...product };
           }
           return item;
         });
         queryClient.setQueryData<GetProductListResponse>(
-          ["productList"], // 해당 query키를 가진 클라이언트에서의 서버 데이터 직접 업데이트
+          ["productList"],
           updatedProductList
         );
       }
 
-      // 업데이트 후 해당 쿼리의 재요청을 막기 위해 플래그 설정
-      const setSkipRefetchFlags = () => {
+      // 수정된 데이터가 캐시되었으므로 skipRefetch 플래그 설정
+      if (latestProduct) {
         queryClient.setQueryData(["product", id, "skipRefetch"], true);
+      }
+      if (latestProductList) {
         queryClient.setQueryData(["productList", "skipRefetch"], true);
-      };
-      setSkipRefetchFlags();
+      }
 
-      // 롤백을 위해 이전 데이터 반환
-      return { previousProduct, previousProductList };
-    },
-    // 클라이언트 사이드 처리이므로 에러가 발생할 가능성은 낮지만, 안전장치로 유지
-    onError: (_error, { id }, context) => {
-      if (context?.previousProduct) {
-        queryClient.setQueryData(["product", id], context.previousProduct);
-      }
-      if (context?.previousProductList) {
-        queryClient.setQueryData(["productList"], context.previousProductList);
-      }
+      return { latestProduct, latestProductList };
     }
   });
 };
