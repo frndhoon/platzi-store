@@ -59,7 +59,7 @@ const ProductDetailPage = () => {
                   <img
                     src={image}
                     alt={product.title}
-                    className="w-full h-full object-cover rounded-lg"
+                    className="w-full h-full object-cover rounded-lg cursor-pointer"
                   />
                 </CarouselItem>
               ))}

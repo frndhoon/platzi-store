@@ -205,7 +205,7 @@ const ProductEditPage = () => {
                     <CarouselContent>
                       {product.images.map((image, index) => (
                         <CarouselItem key={index}>
-                          <div className="aspect-square rounded-lg overflow-hidden border-2 border-gray-200">
+                          <div className="aspect-square rounded-lg overflow-hidden border-2 border-gray-200 cursor-pointer">
                             <img
                               src={image}
                               alt={`Product image ${index + 1}`}
