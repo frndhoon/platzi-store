@@ -217,8 +217,8 @@ const ProductEditPage = () => {
                     </CarouselContent>
                     {product.images.length > 1 && (
                       <>
-                        <CarouselPrevious />
-                        <CarouselNext />
+                        <CarouselPrevious className="hidden sm:flex" />
+                        <CarouselNext className="hidden sm:flex" />
                       </>
                     )}
                   </Carousel>

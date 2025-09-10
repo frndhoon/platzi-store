@@ -64,8 +64,9 @@ const ProductDetailPage = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+
+            <CarouselPrevious className="hidden sm:flex" />
+            <CarouselNext className="hidden lg:flex" />
           </Carousel>
         )}
 
