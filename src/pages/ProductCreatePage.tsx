@@ -95,7 +95,7 @@ const ProductCreatePage = () => {
       price: 1,
       description: "",
       categoryId: null,
-      images: [""]
+      images: []
     }
   });
 
