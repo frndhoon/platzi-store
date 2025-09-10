@@ -97,7 +97,7 @@ const ProductDetailPage = () => {
             ) : (
               <>
                 <h2 className="text-lg font-semibold">Description</h2>
-                <p className="text-gray-700">{product?.description}</p>
+                <p>{product?.description}</p>
               </>
             )}
           </div>
