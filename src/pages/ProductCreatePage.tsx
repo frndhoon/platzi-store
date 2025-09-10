@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Asterisk, Image as ImageIcon, Upload, X } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -152,6 +152,21 @@ const ProductCreatePage = () => {
       images: []
     }
   });
+
+  // 필수 필드들을 watch하여 Create 버튼 활성화 여부 결정 (사용자 실수 안하게)
+  // https://react-hook-form.com/docs/usewatch
+  const watchedFields = useWatch({
+    control: form.control,
+    name: ["title", "description", "categoryId", "images"]
+  });
+  const [title, description, categoryId, images] = watchedFields;
+
+  const isFormValid =
+    title?.trim().length > 0 &&
+    description?.trim().length > 0 &&
+    categoryId !== null &&
+    categoryId > 0 &&
+    images?.length > 0;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     // zod로 이미 유효성 검사를 통과했기 때문에 as PostProductRequest로 타입 캐스팅
@@ -389,7 +404,7 @@ const ProductCreatePage = () => {
             <Button
               type="submit"
               className="flex-1"
-              disabled={isLoading || isPending}
+              disabled={isLoading || isPending || !isFormValid}
             >
               Create
             </Button>
