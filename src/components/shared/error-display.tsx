@@ -1,15 +1,22 @@
+import type { AxiosError } from "axios";
+
 import { Button } from "@/components/ui/button";
+import { getErrorMessage } from "@/utils/error.utils";
 
 type ErrorDisplayProps = {
   onRefetch: () => void;
+  error: AxiosError;
 };
 
 // 에러 시 렌더링될 문구 및 refetch 버튼
-// refetch 버튼 클릭 시 데이터 다시 불러오기
-const ErrorDisplay = ({ onRefetch }: ErrorDisplayProps) => {
+const ErrorDisplay = ({ onRefetch, error }: ErrorDisplayProps) => {
+  const errorMessage = getErrorMessage(error);
+
   return (
     <div className="flex flex-col items-center justify-center gap-4 min-h-96 w-full">
-      <p>정보를 불러오는데 실패했습니다. 다시 시도해주세요.</p>
+      <p className="text-center text-gray-600 dark:text-gray-400 px-4">
+        {errorMessage}
+      </p>
       <Button onClick={onRefetch}>다시 시도</Button>
     </div>
   );
