@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router";
 
 import { MainLayout } from "@/components/layout/main-layout";
 import ProductCreatePage from "@/pages/ProductCreatePage";
+import ProductDetailPage from "@/pages/ProductDetailPage";
 import ProductEditPage from "@/pages/ProductEditPage";
 import ProductListPage from "@/pages/ProductListPage";
 
@@ -19,6 +20,7 @@ const Router = () => {
         <Route path="product">
           <Route index element={<ProductListPage />} />
           <Route path="create" element={<ProductCreatePage />} />
+          <Route path=":id" element={<ProductDetailPage />} />
           <Route path=":id/edit" element={<ProductEditPage />} />
         </Route>
       </Route>
