@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Pencil } from "lucide-react";
 import { useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { z } from "zod";
 
 import { BorderLine } from "@/components/shared/border-line";
-import { RequiredSpan } from "@/components/shared/required-span";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -93,8 +93,9 @@ const ProductEditPage = () => {
         <p className="text-sm text-gray-600">
           Edit the product information below.
         </p>
-        <p className="text-sm text-right">
-          <RequiredSpan /> means required fields
+        <p className="text-sm justify-end flex items-center gap-1">
+          <Pencil className="w-3 h-3 text-red-500" />
+          means can edit fields
         </p>
       </div>
 
@@ -169,7 +170,7 @@ const ProductEditPage = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Title <RequiredSpan />
+                    Title <Pencil className="w-3 h-3 text-red-500" />
                   </FormLabel>
                   <FormControl>
                     {isProductLoaded ? (
@@ -193,7 +194,7 @@ const ProductEditPage = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Price <RequiredSpan />
+                    Price <Pencil className="w-3 h-3 text-red-500" />
                   </FormLabel>
                   <FormControl>
                     {isProductLoaded ? (
