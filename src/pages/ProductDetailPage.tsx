@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { BorderLine } from "@/components/shared/border-line";
 import { DeleteButton } from "@/components/shared/delete-button";
 import { ErrorDisplay } from "@/components/shared/error-display";
+import { ImageModal } from "@/components/shared/image-modal";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -12,6 +13,7 @@ import {
   CarouselPrevious
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useImageModal } from "@/hooks/useImageModal";
 import { useDeleteProduct, useGetProduct } from "@/hooks/useProduct";
 
 const ProductDetailPage = () => {
@@ -21,6 +23,9 @@ const ProductDetailPage = () => {
 
   const { data: product, isLoading, error, refetch } = useGetProduct(productId);
   const { mutate: deleteProduct } = useDeleteProduct();
+
+  const { isOpen, selectedImage, imageAlt, openModal, closeModal } =
+    useImageModal();
 
   const handleDelete = (): void => {
     deleteProduct(productId);
@@ -60,6 +65,7 @@ const ProductDetailPage = () => {
                     src={image}
                     alt={product.title}
                     className="w-full h-full object-cover rounded-lg cursor-pointer"
+                    onClick={() => openModal(image, product.title)}
                   />
                 </CarouselItem>
               ))}
@@ -124,6 +130,13 @@ const ProductDetailPage = () => {
           </div>
         </div>
       </div>
+
+      <ImageModal
+        isOpen={isOpen}
+        onClose={closeModal}
+        imageUrl={selectedImage || ""}
+        imageAlt={imageAlt || "Product image"}
+      />
     </div>
   );
 };
