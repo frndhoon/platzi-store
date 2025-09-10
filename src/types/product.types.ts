@@ -12,6 +12,8 @@ type Product = {
     slug: string;
   };
   images: string[];
+  updatedAt?: string;
+  creationAt?: string;
 };
 
 type GetProductResponse = Product;
@@ -29,15 +31,20 @@ type PostProductRequest = {
 };
 
 // 생성 시 response로 받는 product type
-type PostProductResponse = Product & {
-  creationAt: string;
-  updatedAt: string;
-};
+type PostProductResponse = Product;
 
 // 삭제 시 response로 받는 type
 type DeleteProductResponse = {
   success: boolean;
 };
+
+// 수정 시 request로 보내야할 product type
+type PutProductRequest = {
+  title: string;
+  price: number;
+};
+
+type PutProductResponse = Product;
 
 export {
   type DeleteProductResponse,
@@ -45,5 +52,7 @@ export {
   type GetProductResponse,
   type PostProductRequest,
   type PostProductResponse,
-  type Product
+  type Product,
+  type PutProductRequest,
+  type PutProductResponse
 };

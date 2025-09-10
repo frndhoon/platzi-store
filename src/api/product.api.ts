@@ -7,7 +7,9 @@ import {
   type GetProductListResponse,
   type GetProductResponse,
   type PostProductRequest,
-  type PostProductResponse
+  type PostProductResponse,
+  type PutProductRequest,
+  type PutProductResponse
 } from "@/types/product.types";
 
 import { axiosInstance } from "./instance";
@@ -45,4 +47,16 @@ const deleteProduct = async (id: number): Promise<DeleteProductResponse> => {
   return response.data;
 };
 
-export { deleteProduct, getProduct, getProductList, postProduct };
+// Product 수정 API 호출
+const putProduct = async (
+  id: number,
+  product: PutProductRequest
+): Promise<PutProductResponse> => {
+  const response: AxiosResponse<PutProductResponse> = await axiosInstance.put(
+    `products/${id}`,
+    product
+  );
+  return response.data;
+};
+
+export { deleteProduct, getProduct, getProductList, postProduct, putProduct };

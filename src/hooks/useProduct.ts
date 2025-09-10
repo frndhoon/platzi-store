@@ -13,14 +13,17 @@ import {
   deleteProduct,
   getProduct,
   getProductList,
-  postProduct
+  postProduct,
+  putProduct
 } from "@/api/product.api";
 import {
   type DeleteProductResponse,
   type GetProductListResponse,
   type GetProductResponse,
   type PostProductRequest,
-  type PostProductResponse
+  type PostProductResponse,
+  type PutProductRequest,
+  type PutProductResponse
 } from "@/types/product.types";
 
 // Product 조회 useQuery hook
@@ -88,4 +91,36 @@ const useDeleteProduct = (): UseMutationResult<
   });
 };
 
-export { useDeleteProduct, useGetProduct, useGetProductList, usePostProduct };
+// Product 업데이트 useMutation hook
+const usePutProduct = (): UseMutationResult<
+  PutProductResponse,
+  AxiosError,
+  { id: number; product: PutProductRequest }
+> => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, product }) => putProduct(id, product),
+    onSuccess: ({ id }) => {
+      toast.success("상품이 성공적으로 업데이트되었습니다.");
+      queryClient.invalidateQueries({ queryKey: ["product", id] });
+      queryClient.invalidateQueries({ queryKey: ["productList"] });
+      navigate(`/product/${id}`);
+    },
+    // TODO: 현재 500 에러 발생
+    // fake api 사용 중이기 때문에 서버에서 어떤 문제가 발생했는지 정확하게 파악이 어려움
+    // 다른 쪽으로 어떻게 해야할지 생각해보기
+    onError: () => {
+      toast.error("상품 업데이트에 실패했습니다.");
+    }
+  });
+};
+
+export {
+  useDeleteProduct,
+  useGetProduct,
+  useGetProductList,
+  usePostProduct,
+  usePutProduct
+};
