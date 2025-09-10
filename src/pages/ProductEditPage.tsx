@@ -10,6 +10,13 @@ import { BorderLine } from "@/components/shared/border-line";
 import { CancelButton } from "@/components/shared/cancel-button";
 import { Button } from "@/components/ui/button";
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from "@/components/ui/carousel";
+import {
   Form,
   FormControl,
   FormField,
@@ -113,143 +120,154 @@ const ProductEditPage = () => {
 
       <BorderLine />
 
-          <Form {...form}>
-            <form
+      <Form {...form}>
+        <form
           className="flex flex-col gap-3"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Title <Pencil className="w-3 h-3 text-red-500" />
-                    </FormLabel>
-                    <FormControl>
-                      {isProductLoaded ? (
-                        <Input
-                          {...field}
-                          placeholder="Enter a unique product title"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <Skeleton className="h-9 w-full" />
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="price"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Price <Pencil className="w-3 h-3 text-red-500" />
-                    </FormLabel>
-                    <FormControl>
-                      {isProductLoaded ? (
-                        <Input
-                          type="number"
-                          {...field}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            field.onChange(Number(e.target.value))
-                          }
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <Skeleton className="h-9 w-full" />
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-          <BorderLine />
-
-              <div className="flex flex-col gap-3 cursor-not-allowed text-gray-500">
-                <div className="flex flex-col gap-2 ">
-                  <Label>Category</Label>
-                  {isProductLoaded ? (
-                    <Input value={product.category.name} disabled />
-                  ) : (
-                    <Skeleton className="w-full h-9" />
-                  )}
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <Label>Images</Label>
-                  {isProductLoaded ? (
-                    <div className="flex gap-2 flex-wrap">
-                      {product.images.map((image, index) => (
-                        <img
-                          key={index}
-                          src={image}
-                          alt={`Product image ${index + 1}`}
-                          className="w-20 h-20 rounded-md object-cover"
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="flex gap-2 flex-wrap">
-                      <Skeleton className="w-20 h-20 rounded-md" />
-                      <Skeleton className="w-20 h-20 rounded-md" />
-                      <Skeleton className="w-20 h-20 rounded-md" />
-                    </div>
-                  )}
-                </div>
-
-            <div className="flex flex-col gap-2">
-              <Label>Description</Label>
-                    {isProductLoaded ? (
-                      <Textarea
-                        value={product.description}
-                        disabled
-                        className="bg-gray-50"
-                      />
-                    ) : (
-                      <Skeleton className="h-20 w-full" />
-                    )}
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <Label>Updated At</Label>
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Title <Pencil className="w-3 h-3 text-red-500" />
+                </FormLabel>
+                <FormControl>
                   {isProductLoaded ? (
                     <Input
-                      value={
-                        product.updatedAt
-                          ? new Date(product.updatedAt).toLocaleString("en-US")
-                          : "Not available"
-                      }
-                      disabled
+                      {...field}
+                      placeholder="Enter a unique product title"
+                      disabled={isPending}
                     />
                   ) : (
                     <Skeleton className="h-9 w-full" />
                   )}
-                </div>
-              </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Price <Pencil className="w-3 h-3 text-red-500" />
+                </FormLabel>
+                <FormControl>
+                  {isProductLoaded ? (
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        field.onChange(Number(e.target.value))
+                      }
+                      disabled={isPending}
+                    />
+                  ) : (
+                    <Skeleton className="h-9 w-full" />
+                  )}
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <BorderLine />
 
-              <div className="flex flex-row gap-2">
-                <CancelButton
-                  className="flex-1"
-                  onClick={() => navigate(`/product/${id}`)}
+          <div className="flex flex-col gap-3 cursor-not-allowed text-gray-500">
+            <div className="flex flex-col gap-2 ">
+              <Label>Category</Label>
+              {isProductLoaded ? (
+                <Input value={product.category.name} disabled />
+              ) : (
+                <Skeleton className="w-full h-9" />
+              )}
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label>Images</Label>
+              {isProductLoaded ? (
+                <div className="w-full max-w-md mx-auto">
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {product.images.map((image, index) => (
+                        <CarouselItem key={index}>
+                          <div className="aspect-square rounded-lg overflow-hidden border-2 border-gray-200">
+                            <img
+                              src={image}
+                              alt={`Product image ${index + 1}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    {product.images.length > 1 && (
+                      <>
+                        <CarouselPrevious />
+                        <CarouselNext />
+                      </>
+                    )}
+                  </Carousel>
+                </div>
+              ) : (
+                <div className="w-full max-w-md mx-auto">
+                  <Skeleton className="aspect-square w-full rounded-lg" />
+                </div>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label>Description</Label>
+              {isProductLoaded ? (
+                <Textarea
+                  value={product.description}
+                  disabled
+                  className="bg-gray-50"
                 />
-                <Button
-                  type="submit"
-                  className="flex-1"
-                  disabled={isLoading || isPending}
-                >
-                  Update
-                </Button>
-              </div>
-            </form>
-          </Form>
+              ) : (
+                <Skeleton className="h-20 w-full" />
+              )}
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label>Updated At</Label>
+              {isProductLoaded ? (
+                <Input
+                  value={
+                    product.updatedAt
+                      ? new Date(product.updatedAt).toLocaleString("en-US")
+                      : "Not available"
+                  }
+                  disabled
+                />
+              ) : (
+                <Skeleton className="h-9 w-full" />
+              )}
+            </div>
+          </div>
+
+          <BorderLine />
+
+          <div className="flex flex-row gap-2">
+            <CancelButton
+              className="flex-1"
+              onClick={() => navigate(`/product/${id}`)}
+            />
+            <Button
+              type="submit"
+              className="flex-1"
+              disabled={isLoading || isPending}
+            >
+              Update
+            </Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };
