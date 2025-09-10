@@ -57,4 +57,10 @@ const getActionType = (errorType: ErrorType): ActionType => {
   }
 };
 
-export { getActionType, getErrorMessage };
+// AxiosError를 직접 받는 오버로드
+const getActionTypeFromError = (error: AxiosError): ActionType => {
+  const errorType = getErrorType(error);
+  return getActionType(errorType);
+};
+
+export { getActionType, getActionTypeFromError, getErrorMessage };
