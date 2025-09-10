@@ -23,6 +23,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { useGetProduct, usePutProduct } from "@/hooks/useProduct";
 
+// TODO: 해당 페이지 리팩토링 필요 (컴포넌트 분리)
+
 const ProductEditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
