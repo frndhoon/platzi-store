@@ -8,6 +8,7 @@ import { z } from "zod";
 
 import { BorderLine } from "@/components/shared/border-line";
 import { CancelButton } from "@/components/shared/cancel-button";
+import { ImageModal } from "@/components/shared/image-modal";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -28,6 +29,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
+import { useImageModal } from "@/hooks/useImageModal";
 import { useGetProduct, usePutProduct } from "@/hooks/useProduct";
 import { limitNumber } from "@/utils/number.utils";
 
@@ -42,6 +44,9 @@ const ProductEditPage = () => {
 
   // product 데이터가 불러와졌는지 확인하는 조건
   const isProductLoaded = product && !isLoading;
+
+  const { isOpen, selectedImage, imageAlt, openModal, closeModal } =
+    useImageModal();
 
   const formSchema = z.object({
     title: z.string().min(1, {
@@ -210,6 +215,7 @@ const ProductEditPage = () => {
                               src={image}
                               alt={`Product image ${index + 1}`}
                               className="w-full h-full object-cover"
+                              onClick={() => openModal(image, product.title)}
                             />
                           </div>
                         </CarouselItem>
@@ -277,6 +283,13 @@ const ProductEditPage = () => {
           </div>
         </form>
       </Form>
+
+      <ImageModal
+        isOpen={isOpen}
+        onClose={closeModal}
+        imageUrl={selectedImage}
+        imageAlt={imageAlt}
+      />
     </div>
   );
 };
