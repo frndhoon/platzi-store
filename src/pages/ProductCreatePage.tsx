@@ -51,9 +51,12 @@ const formSchema = z.object({
   description: z.string().min(1, {
     message: "Description is required"
   }),
-  categoryId: z.number().min(1, {
-    message: "Category ID must be greater than 1"
-  }),
+  categoryId: z
+    .number()
+    .min(1, {
+      message: "Category ID must be greater than 1"
+    })
+    .nullable(),
   // https://zod.dev/v4/changelog?id=zarray (zod empty array 선언 방법)
   images: z.array(z.string().min(1), {
     message: "Product must have at least one image"
@@ -64,6 +67,16 @@ const ProductCreatePage = () => {
   const navigate = useNavigate();
   const { mutate: postProduct, isSuccess } = usePostProduct();
   const { data: categoryList, isLoading, isError } = useGetCategoryList();
+
+  // 카테고리 Select placeholder 메시지 결정
+  const getCategoryPlaceholder = (fieldValue: number | null) => {
+    // 값이 선택되지 않았을 때만 placeholder 표시
+    if (isLoading) return "Loading...";
+
+    if (isError) return "Failed to load categories. Please refresh.";
+
+    if (fieldValue === null) return "Select a category";
+  };
 
   // TODO: useEffect 대신 사용할 방법 찾아보기 -> mutation은 onSuccess 아직 있다고 확인됨
   // React Query v5 스타일: useEffect를 사용한 side effect 처리
@@ -81,13 +94,14 @@ const ProductCreatePage = () => {
       title: "",
       price: 1,
       description: "",
-      categoryId: 0,
+      categoryId: null,
       images: [""]
     }
   });
 
-  const onSubmit = (data: PostProductRequest) => {
-    postProduct(data);
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    // zod로 이미 유효성 검사를 통과했기 때문에 as PostProductRequest로 타입 캐스팅
+    postProduct(data as PostProductRequest);
   };
 
   return (
@@ -181,9 +195,7 @@ const ProductCreatePage = () => {
                 </FormLabel>
                 <FormControl>
                   <Select
-                    value={
-                      field.value === 0 ? undefined : field.value.toString()
-                    }
+                    value={field.value?.toString() || ""}
                     onValueChange={(value) => {
                       form.setValue("categoryId", Number(value));
                     }}
@@ -191,13 +203,7 @@ const ProductCreatePage = () => {
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue
-                        placeholder={
-                          isLoading
-                            ? "Loading..."
-                            : isError
-                              ? "Failed to load categories. Please refresh."
-                              : "Select a category"
-                        }
+                        placeholder={getCategoryPlaceholder(field.value)}
                       />
                     </SelectTrigger>
                     <SelectContent>
