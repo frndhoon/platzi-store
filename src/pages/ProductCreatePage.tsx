@@ -368,6 +368,7 @@ const ProductCreatePage = () => {
             <CancelButton
               className="flex-1"
               onClick={() => navigate("/product")}
+              disabled={isLoading || isPending}
             />
             <Button type="submit" className="flex-1">
               Create
