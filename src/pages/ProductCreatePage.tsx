@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Asterisk } from "lucide-react";
-import { useEffect } from "react";
+import { Asterisk, Image as ImageIcon, Upload, X } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -26,9 +26,12 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { MAX_IMAGE_COUNT } from "@/constants/product.constant";
 import { useGetCategoryList } from "@/hooks/useCategory";
 import { usePostProduct } from "@/hooks/useProduct";
 import { type PostProductRequest } from "@/types/product.types";
+
+// TODO: 해당 페이지 리팩토링 필요 (컴포넌트 분리)
 
 const formSchema = z.object({
   // 서버 400 error message
@@ -63,10 +66,13 @@ const formSchema = z.object({
   })
 });
 
+// TODO: 페이지 컴포넌트 분리 필요
+
 const ProductCreatePage = () => {
   const navigate = useNavigate();
   const { mutate: postProduct, isSuccess } = usePostProduct();
   const { data: categoryList, isLoading, isError } = useGetCategoryList();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // 카테고리 Select placeholder 메시지 결정
   const getCategoryPlaceholder = (fieldValue: number | null) => {
@@ -87,6 +93,53 @@ const ProductCreatePage = () => {
       navigate("/product");
     }
   }, [isSuccess, navigate]);
+
+  // 랜덤 이미지 URL 생성 함수
+  const generateRandomImageUrl = () => {
+    const randomId = Math.floor(Math.random() * 1000) + 1;
+    return `https://picsum.photos/id/${randomId}/300`;
+  };
+
+  // 파일 첨부 버튼 클릭 핸들러
+  const handleFileUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  // 파일 선택 핸들러
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    // for문 files.length 유효성 검사
+    // -> 파일이 없다면 변경할 필요 없음
+    if (!files || files.length === 0) return;
+
+    const currentImages = form.getValues("images");
+    const newImages = [...currentImages];
+
+    // 선택된 파일 수만큼 랜덤 이미지 URL 생성
+    for (let i = 0; i < files.length; i++) {
+      if (newImages.length >= MAX_IMAGE_COUNT) {
+        toast.error(`You can upload up to ${MAX_IMAGE_COUNT} images.`);
+        break;
+      }
+      const newImageUrl = generateRandomImageUrl();
+      newImages.push(newImageUrl);
+    }
+
+    form.setValue("images", newImages);
+
+    // 파일 입력 초기화
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  // 이미지 삭제 함수
+  const removeImage = (index: number) => {
+    const currentImages = form.getValues("images");
+
+    const newImages = currentImages.filter((_, i) => i !== index);
+    form.setValue("images", newImages);
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -223,26 +276,86 @@ const ProductCreatePage = () => {
             )}
           />
 
-          {/* 이미지는 보통 formData 형식인데, request body에 string[]으로 들어가야함
-          -> 파일 형태로 보내는 것과 달라서 [""] 형태로 전송
-          -> fake api라 한계가 있음 */}
-
+          {/* 이미지 첨부 섹션 */}
           <FormField
             control={form.control}
             name="images"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Image URL <Asterisk className="w-3 h-3 text-red-500" />
+                  Images <Asterisk className="w-3 h-3 text-red-500" />
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    value={field.value[0]}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      field.onChange([e.target.value])
-                    }
-                    placeholder="https://placehold.co/600x400"
-                  />
+                  <div className="space-y-3">
+                    {/* 숨겨진 파일 입력 */}
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleFileChange}
+                      className="hidden"
+                    />
+
+                    {/* 이미지 미리보기 */}
+                    {field.value.length > 0 ? (
+                      <div className="grid grid-cols-3 gap-3">
+                        {field.value.map((imageUrl, index) => (
+                          <div key={index} className="relative group">
+                            <div className="aspect-square rounded-lg overflow-hidden border-2 border-gray-200">
+                              <img
+                                src={imageUrl}
+                                alt={`Uploaded image ${index + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            {field.value.length > 1 && (
+                              <Button
+                                type="button"
+                                variant="destructive"
+                                size="sm"
+                                onClick={() => removeImage(index)}
+                                className="absolute -top-2 -right-2 w-6 h-6 p-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <X className="w-3 h-3" />
+                              </Button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="p-8 border-2 border-dashed border-gray-300 rounded-lg text-center">
+                        <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                        <p className="text-sm text-gray-500 mb-1">
+                          Upload images
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          JPG, PNG, GIF files can be selected or dragged and
+                          dropped to upload
+                        </p>
+                      </div>
+                    )}
+
+                    {/* 파일 첨부 버튼 */}
+                    {field.value.length < MAX_IMAGE_COUNT ? (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={handleFileUpload}
+                        className="w-full"
+                      >
+                        <Upload className="w-4 h-4 mr-2" />
+                        Select files ({field.value.length}/{MAX_IMAGE_COUNT})
+                      </Button>
+                    ) : (
+                      <p className="text-sm text-gray-500 text-center">
+                        You can upload up to{" "}
+                        <span className="font-bold text-red-500">
+                          {MAX_IMAGE_COUNT} images.
+                        </span>
+                      </p>
+                    )}
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
