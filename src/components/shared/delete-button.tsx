@@ -14,15 +14,18 @@ import { Button } from "@/components/ui/button";
 type DeleteButtonProps = {
   onDelete: () => void;
   target: string;
+  disabled?: boolean;
 };
 
 // 삭제 버튼
 // 버튼 클릭 이벤트 시 alert dialog 렌더링
-const DeleteButton = ({ onDelete, target }: DeleteButtonProps) => {
+const DeleteButton = ({ onDelete, target, disabled }: DeleteButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">Delete</Button>
+        <Button variant="destructive" disabled={disabled}>
+          Delete
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
