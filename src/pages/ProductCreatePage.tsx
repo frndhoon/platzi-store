@@ -74,6 +74,18 @@ const ProductCreatePage = () => {
   const { data: categoryList, isLoading, isError } = useGetCategoryList();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // 숫자 입력값을 범위 내로 제한하는 헬퍼 함수
+  const constrainNumberValue = (
+    value: string,
+    min: number,
+    max: number
+  ): number => {
+    const numValue = Number(value);
+    if (numValue > max) return max;
+    if (numValue < min) return min;
+    return numValue || min;
+  };
+
   // 카테고리 Select placeholder 메시지 결정
   const getCategoryPlaceholder = (fieldValue: number | null) => {
     // 값이 선택되지 않았을 때만 placeholder 표시
@@ -189,6 +201,8 @@ const ProductCreatePage = () => {
                     {...field}
                     placeholder="Enter a unique product title"
                     disabled={isLoading || isPending}
+                    minLength={1}
+                    maxLength={30}
                   />
                 </FormControl>
                 <FormMessage />
@@ -209,10 +223,14 @@ const ProductCreatePage = () => {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        field.onChange(Number(e.target.value))
-                      }
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        field.onChange(
+                          constrainNumberValue(e.target.value, 1, 100)
+                        );
+                      }}
                       disabled={isLoading || isPending}
+                      min={1}
+                      max={100}
                     />
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 select-none">
                       $
