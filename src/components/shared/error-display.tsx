@@ -17,7 +17,7 @@ const ErrorDisplay = ({ onRefetch, error }: ErrorDisplayProps) => {
       <p className="text-center text-gray-600 dark:text-gray-400 px-4">
         {errorMessage}
       </p>
-      <Button onClick={onRefetch}>다시 시도</Button>
+      <Button onClick={onRefetch}>Retry</Button>
     </div>
   );
 };
