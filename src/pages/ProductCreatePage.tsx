@@ -56,6 +56,7 @@ const ProductCreatePage = () => {
   const navigate = useNavigate();
   const { mutate: postProduct, isSuccess } = usePostProduct();
 
+  // TODO: useEffect 대신 사용할 방법 찾아보기 -> mutation은 onSuccess 아직 있다고 확인됨
   // React Query v5 스타일: useEffect를 사용한 side effect 처리
   //https://tkdodo.eu/blog/breaking-react-querys-api-on-purpose
   useEffect(() => {
