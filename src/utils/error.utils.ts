@@ -1,22 +1,21 @@
 import type { AxiosError } from "axios";
 
 import { ERROR_MESSAGES } from "@/constants/error.constant";
-import type { ErrorType } from "@/types/error.types";
+import type { ActionType, ErrorType } from "@/types/error.types";
 
 // AxiosError를 ErrorType으로 분류
 const getErrorType = (error: AxiosError): ErrorType => {
   // 네트워크 에러 체크
-  if (error.code === "ERR_NAME_NOT_RESOLVED") {
-    return "NETWORK_ERROR";
-  }
-
-  if (error.code === "ERR_NETWORK") {
-    return "NETWORK_ERROR";
-  }
-
-  // 서버 응답이 없는 경우 (일반적인 네트워크 에러)
-  if (!error.response) {
-    return "NETWORK_ERROR";
+  switch (error.code) {
+    case "ERR_NAME_NOT_RESOLVED":
+    case "ERR_NETWORK":
+      return "NETWORK_ERROR";
+    default:
+      // 서버 응답이 없는 경우 (일반적인 네트워크 에러)
+      if (!error.response) {
+        return "NETWORK_ERROR";
+      }
+      break;
   }
 
   // HTTP 상태 코드별 분류
@@ -43,4 +42,19 @@ const getErrorMessage = (error: AxiosError): string => {
   return ERROR_MESSAGES[errorType];
 };
 
-export { getErrorMessage };
+// ErrorType에 따른 적절한 액션 타입 반환
+const getActionType = (errorType: ErrorType): ActionType => {
+  switch (errorType) {
+    case "NETWORK_ERROR":
+    case "TIMEOUT_ERROR":
+    case "SERVER_ERROR":
+    case "UNKNOWN_ERROR":
+      return "RETRY"; // 다시 시도
+    case "NOT_FOUND":
+    case "CLIENT_ERROR":
+    default:
+      return "NAVIGATE_BACK"; // 뒤로 가기
+  }
+};
+
+export { getActionType, getErrorMessage };

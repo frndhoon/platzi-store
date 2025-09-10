@@ -5,3 +5,7 @@ export type ErrorType =
   | "NOT_FOUND"
   | "CLIENT_ERROR"
   | "UNKNOWN_ERROR";
+
+export type ActionType =
+  | "RETRY" // 다시 시도
+  | "NAVIGATE_BACK"; // 뒤로 가기
