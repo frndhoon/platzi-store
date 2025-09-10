@@ -26,6 +26,11 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from "@/components/ui/tooltip";
 import { MAX_IMAGE_COUNT } from "@/constants/product.constant";
 import { useGetCategoryList } from "@/hooks/useCategory";
 import { usePostProduct } from "@/hooks/useProduct";
@@ -401,13 +406,22 @@ const ProductCreatePage = () => {
               onClick={() => navigate("/product")}
               disabled={isLoading || isPending}
             />
-            <Button
-              type="submit"
-              className="flex-1"
-              disabled={isLoading || isPending || !isFormValid}
-            >
-              Create
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="flex-1">
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isLoading || isPending || !isFormValid}
+                  >
+                    Create
+                  </Button>
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Have you filled in all the required fields?</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
         </form>
       </Form>
