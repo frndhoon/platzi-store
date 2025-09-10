@@ -7,6 +7,8 @@ function Input({
   type,
   minLength,
   maxLength,
+  min,
+  max,
   ...props
 }: React.ComponentProps<"input">) {
   return (
@@ -21,6 +23,8 @@ function Input({
       )}
       minLength={minLength}
       maxLength={maxLength}
+      min={min}
+      max={max}
       {...props}
     />
   );
