@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-// import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { Button } from "@/components/ui/button";
 
 // navbar 및 테마 변경
@@ -11,8 +11,7 @@ const Header = () => {
         <img src="/icon.svg" alt="logo" className="w-10 h-10" />
       </Link>
       <div className="flex items-center gap-2">
-        {/* TODO: 다크모드 토글 해결 */}
-        {/* <ThemeToggle /> */}
+        <ThemeToggle />
         <Link to="product/create">
           <Button>상품 추가</Button>
         </Link>
