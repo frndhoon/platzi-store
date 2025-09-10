@@ -29,6 +29,7 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { useGetProduct, usePutProduct } from "@/hooks/useProduct";
+import { limitNumber } from "@/utils/number.utils";
 
 // TODO: 해당 페이지 리팩토링 필요 (컴포넌트 분리)
 
@@ -139,6 +140,8 @@ const ProductEditPage = () => {
                       {...field}
                       placeholder="Enter a unique product title"
                       disabled={isPending}
+                      minLength={1}
+                      maxLength={50}
                     />
                   ) : (
                     <Skeleton className="h-9 w-full" />
@@ -164,7 +167,7 @@ const ProductEditPage = () => {
                         type="number"
                         {...field}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          field.onChange(Number(e.target.value))
+                          field.onChange(limitNumber(e.target.value, 1, 1000))
                         }
                         disabled={isPending}
                         className="pr-8"

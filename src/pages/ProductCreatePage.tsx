@@ -191,7 +191,7 @@ const ProductCreatePage = () => {
                     placeholder="Enter a unique product title"
                     disabled={isLoading || isPending}
                     minLength={1}
-                    maxLength={30}
+                    maxLength={50}
                   />
                 </FormControl>
                 <FormMessage />
