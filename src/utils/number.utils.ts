@@ -4,30 +4,25 @@ const limitNumber = (
   input: string,
   min: number,
   max: number
-): (number | string)[] => {
-  // "/"로 분리하여 각 부분을 처리
-  const parts = input.split("/");
+): number | string => {
+  // 문자열을 숫자로 변환 (앞의 0은 자동으로 제거됨)
+  const num = parseInt(input.trim(), 10);
 
-  return parts.map((part) => {
-    // 문자열을 숫자로 변환 (앞의 0은 자동으로 제거됨)
-    const num = parseInt(part.trim(), 10);
+  // NaN인 경우 빈 문자열로 처리
+  if (isNaN(num)) {
+    return "";
+  }
 
-    // NaN인 경우 빈 문자열로 처리
-    if (isNaN(num)) {
-      return "";
-    }
+  if (num < min) {
+    return min;
+  }
 
-    if (num < min) {
-      return min;
-    }
+  // max보다 크거나 같으면 max로 설정
+  if (num >= max) {
+    return max;
+  }
 
-    // 999보다 크거나 같으면 1000으로 설정
-    if (num >= max) {
-      return max;
-    }
-
-    return num;
-  });
+  return num;
 };
 
 export { limitNumber };
