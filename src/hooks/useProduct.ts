@@ -25,20 +25,18 @@ import {
 
 // Product 조회 useQuery hook
 const useGetProduct = (
-  id: number,
-  options?: { skipRefetch?: boolean }
+  id: number
 ): UseQueryResult<GetProductResponse, AxiosError> => {
   const queryClient = useQueryClient();
 
-  // usePutProduct에서 설정한 skipRefetch 플래그 확인
-  const shouldSkipRefetch =
-    options?.skipRefetch ||
-    queryClient.getQueryData(["product", id, "skipRefetch"]);
+  // 캐시된 데이터가 있다면, 쿼리 비활성화
+  const isCachedData = queryClient.getQueryData(["product", id, "skipRefetch"]);
 
   return useQuery({
     queryKey: ["product", id],
     queryFn: () => getProduct(id),
-    enabled: !shouldSkipRefetch // skipRefetch가 true면 쿼리 비활성화
+    enabled: !isCachedData, // skipRefetch가 true면 쿼리 비활성화
+    gcTime: isCachedData ? Infinity : 0
   });
 };
 
@@ -47,9 +45,16 @@ const useGetProductList = (): UseQueryResult<
   GetProductListResponse,
   AxiosError
 > => {
+  const queryClient = useQueryClient();
+
+  // 캐시된 데이터가 있다면, 쿼리 비활성화
+  const isCachedData = queryClient.getQueryData(["productList", "skipRefetch"]);
+
   return useQuery({
     queryKey: ["productList"],
-    queryFn: getProductList
+    queryFn: getProductList,
+    enabled: !isCachedData,
+    gcTime: isCachedData ? Infinity : 0
   });
 };
 
@@ -146,7 +151,11 @@ const usePutProduct = (): UseMutationResult<
       }
 
       // 업데이트 후 해당 쿼리의 재요청을 막기 위해 플래그 설정
-      queryClient.setQueryData(["product", id, "skipRefetch"], true);
+      const setSkipRefetchFlags = () => {
+        queryClient.setQueryData(["product", id, "skipRefetch"], true);
+        queryClient.setQueryData(["productList", "skipRefetch"], true);
+      };
+      setSkipRefetchFlags();
 
       // 롤백을 위해 이전 데이터 반환
       return { previousProduct, previousProductList };
